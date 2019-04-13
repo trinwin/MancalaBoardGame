@@ -29,10 +29,9 @@ public class GreenStone implements StoneStrategy {
 			g2.fill(stone);
 		}
 		
-		
-		
 	}
 
+	
 	@Override
 	public int getIconWidth() {
 		

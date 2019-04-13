@@ -12,7 +12,7 @@ public class MancalaBoardModel {
 	private int[] currBoard; 
 	private int[] prevBoard;
 	private ArrayList<ChangeListener> listeners; //will only contain View Listener
-	private boolean lastStoneInMancala; //ungo, turn
+	private boolean lastStoneInMancala;
 	
 	/**
 	 * Constructs a MancalaBoardModel with specified number of stones in each pit, and 0 stones in Mancalas
@@ -135,7 +135,7 @@ public class MancalaBoardModel {
 		//remember: if the player's last stone lands in her Mancala, she gets another turn
 		//in this case, just set lastStoneInMancala to True
 		
-		//to alert listeners of change
+		//to alert listeners of change 
 		for (ChangeListener l : listeners) {
 			l.stateChanged(new ChangeEvent(this));
 		}	
@@ -153,4 +153,5 @@ public class MancalaBoardModel {
 		
 		listeners.add(l);
 	}
+
 }

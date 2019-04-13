@@ -26,7 +26,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	private static final int MANCALA_B = 13;
 	
 	private MancalaBoardModel theModel;
-	private StoneStrategy theStrategy; 
+	private StoneStrategy theStrategy; //
 
 	public MancalaBoardView() {
 		 
@@ -96,7 +96,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						//theModel.move(i);
+						pitButtons[3].setText("pressed");
 					}
 	    			
 	    		});
@@ -104,6 +104,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    		//add(pitButtons[i]);
 	    	}
 	    }
+	    
 	    add(b6);
 	    add(b5);
 	    add(b4);
@@ -118,19 +119,44 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    add(a5);
 	    add(a6);
 	    
-	    //TODO
-//		JButton test = new JButton("A test");
-//		test.setIcon(new GreenStone());
-//		test.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				test.setText("pressed");
-//			}
-//			
-//		});
-		//add(test);
+	  //  TODO
+		JButton test1 = new JButton("A test 1");
+		JButton test = new JButton("A test");
+		
+		test.setIcon(new GreenStone());
+		
+		test.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				//call model's move
+				//get the data model 
+				test.setText("pressed");
+				test1.setText("test was pressed");
+				//repaint();
+			}
+			
+		});
+		add(test);
+		
+
+		//test1.setIcon(new GreenStone());
+		test1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				//model's move
+				test1.setText("pressed");
+				test.setText("test1 was pressed");
+				test1.setIcon(new GreenStone());
+				//repaint();
+			}
+			
+		});
+		add(test);
+		add(test1);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
