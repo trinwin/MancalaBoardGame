@@ -97,6 +97,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						pitButtons[3].setText("pressed");
+						// TODO notify model of changes to data (amount of stones in each pit)
 					}
 	    			
 	    		});
