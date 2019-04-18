@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -71,7 +72,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	
 	public void displayBoard()
 	{
-		setLayout(new GridLayout(2, 6));
+		setLayout(new BorderLayout(10, 10));
 	    
 	    JButton a1 = new JButton("A1");  
 	    JButton a2 = new JButton("A2");  
@@ -87,6 +88,12 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    JButton b5 = new JButton("B5");  
 	    JButton b6 = new JButton("B6"); 
 	    
+	    JButton m1 = new JButton("m1");
+	    JButton m2 = new JButton("m2");
+	    
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new GridLayout(2, 6, 10, 10));
+	    
 //	    a2.addMouseListener(new PitMouseListener("mouse #1") {
 //	    	public void mousePressed(MouseEvent event) {
 //	    		String mouseID = this.getMouseListenerID();
@@ -94,8 +101,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 //	    	}
 //	    });
 	    
-	    JButton[] pitButtons = new JButton[] {a1, a2, a3, a4, a5, a6, null,
-	    		 b1, b2, b3, b4, b5, b6, null};
+	    JButton[] pitButtons = new JButton[] {b6, b5, b4, b3, b2, b1, m2,
+	    		 a6, a5, a4, a3, a2, a1, m1};
 	    
 //	    for(int i = pitButtons.length - 1; i <= 0; i--) { 
 //	    	
@@ -115,10 +122,9 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 //	    		//add(pitButtons[i]);
 //	    	}
 //	    }
-	    int numPits = pitButtons.length;
-	    System.out.println(numPits);
+
 	    int counter = 1;		
-	    for(int i = pitButtons.length - 1; i > 0; i--) { 
+	    for(int i = pitButtons.length - 1; i >= 0; i--) { 
 	    	
 	    	if(i != MANCALA_B && i != MANCALA_A) {
 	    		
@@ -138,19 +144,23 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    
 	    
 	    
-	    add(b6);
-	    add(b5);
-	    add(b4);
-	    add(b3);
-	    add(b2);
-	    add(b1);
+	    panel.add(b6);
+	    panel.add(b5);
+	    panel.add(b4);
+	    panel.add(b3);
+	    panel.add(b2);
+	    panel.add(b1);
 	    
-	    add(a1);
-	    add(a2);
-	    add(a3);
-	    add(a4);
-	    add(a5);
-	    add(a6);
+	    panel.add(a1);
+	    panel.add(a2);
+	    panel.add(a3);
+	    panel.add(a4);
+	    panel.add(a5);
+	    panel.add(a6);
+	    
+	    add(panel);
+	    add(m1, BorderLayout.EAST);
+	    add(m2, BorderLayout.WEST);
 	    
 //	  //  TODO
 //		JButton test1 = new JButton("A test 1");
