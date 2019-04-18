@@ -1,6 +1,9 @@
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -69,7 +72,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	public void displayBoard()
 	{
 		setLayout(new GridLayout(2, 6));
-
+	    
 	    JButton a1 = new JButton("A1");  
 	    JButton a2 = new JButton("A2");  
 	    JButton a3 = new JButton("A3");  
@@ -82,29 +85,58 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    JButton b3 = new JButton("B3");  
 	    JButton b4 = new JButton("B4");  
 	    JButton b5 = new JButton("B5");  
-	    JButton b6 = new JButton("B6");  
+	    JButton b6 = new JButton("B6"); 
 	    
-	    JButton[] pitButtons = new JButton[] {null, a1, a2, a3, a4, a5, a6, 
-	    		null, b1, b2, b3, b4, b5, b6};
+//	    a2.addMouseListener(new PitMouseListener("mouse #1") {
+//	    	public void mousePressed(MouseEvent event) {
+//	    		String mouseID = this.getMouseListenerID();
+//	    		System.out.println(mouseID);
+//	    	}
+//	    });
 	    
-	    for(int i = pitButtons.length - 1; i <= 0; i--) { 
+	    JButton[] pitButtons = new JButton[] {a1, a2, a3, a4, a5, a6, null,
+	    		 b1, b2, b3, b4, b5, b6, null};
+	    
+//	    for(int i = pitButtons.length - 1; i <= 0; i--) { 
+//	    	
+//	    	if(i != MANCALA_B && i != MANCALA_A) {
+//	    		
+//	    		pitButtons[i].addActionListener(new ActionListener() {
+//
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+//						// TODO Auto-generated method stub
+//						pitButtons[3].setText("pressed");
+//						// TODO notify model of changes to data (amount of stones in each pit) using move()
+//					}
+//	    			
+//	    		});
+//	    		
+//	    		//add(pitButtons[i]);
+//	    	}
+//	    }
+	    int numPits = pitButtons.length;
+	    System.out.println(numPits);
+	    int counter = 1;		
+	    for(int i = pitButtons.length - 1; i > 0; i--) { 
 	    	
 	    	if(i != MANCALA_B && i != MANCALA_A) {
 	    		
-	    		pitButtons[i].addActionListener(new ActionListener() {
+	    		pitButtons[i].addMouseListener(new PitMouseListener( counter ) {
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						pitButtons[3].setText("pressed");
-						// TODO notify model of changes to data (amount of stones in each pit)
+					public void mousePressed(MouseEvent event) {
+						int mouseID = this.getMouseListenerID();
+						System.out.println(mouseID);
+						// TODO notify model of changes to data (amount of stones in each pit) using move()
 					}
 	    			
 	    		});
-	    		
+	    		counter++;
 	    		//add(pitButtons[i]);
 	    	}
 	    }
+	    
+	    
 	    
 	    add(b6);
 	    add(b5);
@@ -120,44 +152,44 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    add(a5);
 	    add(a6);
 	    
-	  //  TODO
-		JButton test1 = new JButton("A test 1");
-		JButton test = new JButton("A test");
-		
-		test.setIcon(new GreenStone());
-		
-		test.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//call model's move
-				//get the data model 
-				test.setText("pressed");
-				test1.setText("test was pressed");
-				//repaint();
-			}
-			
-		});
-		add(test);
-		
-
-		//test1.setIcon(new GreenStone());
-		test1.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//model's move
-				test1.setText("pressed");
-				test.setText("test1 was pressed");
-				test1.setIcon(new GreenStone());
-				//repaint();
-			}
-			
-		});
-		add(test);
-		add(test1);
+//	  //  TODO
+//		JButton test1 = new JButton("A test 1");
+//		JButton test = new JButton("A test");
+//		
+//		test.setIcon(new GreenStone());
+//		
+//		test.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				//call model's move
+//				//get the data model 
+//				test.setText("pressed");
+//				test1.setText("test was pressed");
+//				//repaint();
+//			}
+//			
+//		});
+//		add(test);
+//		
+//
+//		//test1.setIcon(new GreenStone());
+//		test1.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				//model's move
+//				test1.setText("pressed");
+//				test.setText("test1 was pressed");
+//				test1.setIcon(new GreenStone());
+//				//repaint();
+//			}
+//			
+//		});
+//		add(test);
+//		add(test1);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
