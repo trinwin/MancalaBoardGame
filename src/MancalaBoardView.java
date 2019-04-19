@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -166,6 +167,16 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    pits.add(b6);
 	    
 	    for(int i = 0; i < pits.size(); i ++) {
+	    	
+	    	if(i != MANCALA_B && i != MANCALA_A) {
+	    		pits.get(i).addMouseListener(new PitMouseListener(i) {
+	    			public void mousePressed(MouseEvent e) {
+	    				int mouseID = this.getMouseListenerID();
+	    				System.out.println(mouseID);
+	    				//TODO notify model of changes to data
+	    			}
+	    		});
+	    	}
 			pits.get(i).setBackground(new Color(207, 185, 154));
 			pits.get(i).setOpaque(true);
 			pits.get(i).setBorderPainted(false);
