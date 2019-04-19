@@ -114,7 +114,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 				} else if(styleCombo.getSelectedItem() == "horizontal") {
 					boardLayoutStrategy = new HorizontalBoardLayout();
 				}
-				displayBoard(); ///!!!!!!!!!
+				displayBoard(); //display board
 			}
 			
 		});
