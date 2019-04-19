@@ -149,15 +149,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    JButton b5 = new JButton();//"B5");  
 	    JButton b6 = new JButton();//"B6");  
 	    
-//	    b6.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				b6.setText("pressed");
-//				
-//			}
-//	    	
-//	    });
 	    
 	    ArrayList<JButton> pits = new ArrayList<>();
 	    pits.add(a1);
