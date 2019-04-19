@@ -102,7 +102,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		styleCombo.addItem("horizontal");
 		
 		JButton selectStyle = new JButton("select");
-		selectStones.addActionListener(new ActionListener() {
+		selectStyle.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -114,7 +114,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 				} else if(styleCombo.getSelectedItem() == "horizontal") {
 					boardLayoutStrategy = new HorizontalBoardLayout();
 				}
-				//displayBoard(); ///!!!!!!!!!
+				displayBoard(); ///!!!!!!!!!
 			}
 			
 		});
@@ -182,7 +182,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 			pits.get(i).setBorderPainted(false);
 	    }
 	    
-	    int[]  mancalaData= new int[] {4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0};
+	    int[]  mancalaData= theModel.getCurrBoard();
 	    
 	    JLabel center = new JLabel(boardLayoutStrategy.getBoard());
 	    boardLayoutStrategy.addStones(pits, mancalaData);
@@ -255,7 +255,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	public static void main(String[] args) {
 		MancalaBoardModel aModel = new MancalaBoardModel();
 		MancalaBoardView aView = new MancalaBoardView(aModel);
-		aView.displayBoard();
+		//aView.displayBoard();
 	}
 	
 	/**
