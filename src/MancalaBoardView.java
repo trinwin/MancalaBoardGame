@@ -38,8 +38,11 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	private static final int MANCALA_B = 13;
 	
 	private MancalaBoardModel theModel;
+	
 	private BoardLayoutStrategy boardLayoutStrategy; //
 
+	private ArrayList<JButton> pits = new ArrayList<>();
+	
 	public MancalaBoardView(MancalaBoardModel theModel) {
 		
 		this.theModel = theModel;
@@ -143,6 +146,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    JButton a5 = new JButton();//"A5");  
 	    JButton a6 = new JButton();//"A6"); 
 	    
+	    //JButton m1 = new JButton();
+	    
 	    JButton b1 = new JButton();//"B1");  
 	    JButton b2 = new JButton();//"B2");  
 	    JButton b3 = new JButton();//"B3");  
@@ -150,14 +155,17 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    JButton b5 = new JButton();//"B5");  
 	    JButton b6 = new JButton();//"B6");  
 	    
+	    //JButton m2 = new JButton();
 	    
-	    ArrayList<JButton> pits = new ArrayList<>();
+	    //ArrayList<JButton> pits = new ArrayList<>();
 	    pits.add(a1);
 	    pits.add(a2);
 	    pits.add(a3);
 	    pits.add(a4);
 	    pits.add(a5);
 	    pits.add(a6);
+	    
+	    //pits.add(m1);
 	    
 	    pits.add(b1);
 	    pits.add(b2);
@@ -166,23 +174,30 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    pits.add(b5);
 	    pits.add(b6);
 	    
+	    //pits.add(m2);
+	    
 	    for(int i = 0; i < pits.size(); i ++) {
 	    	
-	    	if(i != MANCALA_B && i != MANCALA_A) {
-	    		pits.get(i).addMouseListener(new PitMouseListener(i) {
-	    			public void mousePressed(MouseEvent e) {
-	    				int mouseID = this.getMouseListenerID();
-	    				System.out.println(mouseID);
-	    				//TODO notify model of changes to data
-	    			}
-	    		});
-	    	}
-			pits.get(i).setBackground(new Color(207, 185, 154));
+	    	pits.get(i).setBackground(new Color(207, 185, 154));
 			pits.get(i).setOpaque(true);
 			pits.get(i).setBorderPainted(false);
+	    	
+//	    	if(i == MANCALA_A || i == MANCALA_B) {
+//	    		continue;
+//	    	}
+	    	
+    		pits.get(i).addMouseListener(new PitMouseListener(i) {
+    			public void mousePressed(MouseEvent e) {
+    				int mouseID = this.getMouseListenerID();
+    				System.out.println(mouseID);
+    				theModel.move(mouseID);
+    			}
+    		});
+		
+	    	
 	    }
 	    
-	    int[]  mancalaData= theModel.getCurrBoard();
+	    int[] mancalaData= theModel.getCurrBoard();
 	    
 	    JLabel center = new JLabel(boardLayoutStrategy.getBoard());
 	    boardLayoutStrategy.addStones(pits, mancalaData);
@@ -250,28 +265,20 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		setVisible(true);
 		setSize(800, 450);
 		//setSize(400, 1000);
+
 	}
 	
 	public static void main(String[] args) {
 		MancalaBoardModel aModel = new MancalaBoardModel();
 		MancalaBoardView aView = new MancalaBoardView(aModel);
 		//aView.displayBoard();
-	}
-	
-	/**
-	 * Gets the number of the pit corresponding to mouse click.
-	 * @return the number of the pit corresponding to mouse click
-	 */
-	public int getPitNumber() {
-		
-		//TODO
-		
-		return 0;
+		aModel.attach(aView);
 	}
 	
 	public void stateChanged(ChangeEvent e) { //Refer to Cay Hortsmann BarFrame
-		displayBoard();
-		repaint();
+		int[] mancalaData= theModel.getCurrBoard();
+		boardLayoutStrategy.addStones(pits, mancalaData);
+		//repaint();
 		//if theModel.isGameOver find the winner and display
 	}
 	

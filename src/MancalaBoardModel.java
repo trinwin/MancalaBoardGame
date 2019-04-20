@@ -112,23 +112,36 @@ public class MancalaBoardModel {
 	 * Updates board according to the number of stones in pit chosen 
 	 * @param pitNumber the pit number 
 	 */
-	public void move(int pitNumber) { //pit number calculated in view, provided by Control
+	public void move(int pitNumber) { //pit that is pressed by user
 		
 		// to be implemented 
 		
 		prevBoard = currBoard.clone(); //save board prior to move to allow undo option
 		lastStoneInMancala = false;
-		
+		//adjusting the pitnumber since indices of pits array doesn't match up to that of currBoard array
+		if(pitNumber > 5) {
+			pitNumber = pitNumber +1;
+		}
 		//put implementation below:
-		
-		//pseudo code to consider:
 		//save the number of stones in the pit number in variable stoneCount
+		int stoneCount = currBoard[pitNumber];
+		int oPitNumber = pitNumber; 
+		//remove stones from chosen pit and redistribute them
+		for(int i = 1; i <= stoneCount; i++) {
+			if ((pitNumber + i) == 14) {
+				pitNumber = -1*i;//Looping around the board once b6 pit has been reached
+			}
+			currBoard[pitNumber + i] = currBoard[pitNumber + i] + 1;
+		}
 		
 		//set the number of stones in specified pit number to 0
+		currBoard[oPitNumber] = 0;
+		
+		
+		
 		
 		//all of the following changes are done in currBoard:
-		//increment each element in currBoard by one from right to left starting with index: pitNumber - 1 
-		//until there are no more stones
+
 		
 		//remember: a player can only drop a stone into her Mancala (either index 0 or 7)
 		//if pitNumber > 6, a stone can be dropped in B's Mancala, index 7, but cannot be dropped in A's Mancala
