@@ -112,20 +112,32 @@ public class MancalaBoardModel {
 	 * Updates board according to the number of stones in pit chosen 
 	 * @param pitNumber the pit number 
 	 */
-	public void move(int pitNumber) { //pit that is pressed by user
+	public void move(int pitNumber) { //pit that is pressed by user 
 		
-		// to be implemented 
-		
-		prevBoard = currBoard.clone(); //save board prior to move to allow undo option
-		lastStoneInMancala = false;
-		//adjusting the pitnumber since indices of pits array doesn't match up to that of currBoard array
+		boolean turnA = true;
+		if(pitNumber > 5) {
+			turnA = false;
+		}
+		//adjusting the pitnumber for player b since indices of pits array doesn't match up to that of currBoard array
 		if(pitNumber > 5) {
 			pitNumber = pitNumber +1;
 		}
-		//put implementation below:
+		prevBoard = currBoard.clone(); //save board prior to move to allow undo option
+		lastStoneInMancala = false;
 		//save the number of stones in the pit number in variable stoneCount
 		int stoneCount = currBoard[pitNumber];
 		int oPitNumber = pitNumber; 
+		
+		int ownPitNumber = pitNumber;		//
+		if(!turnA) {
+			ownPitNumber = pitNumber - 7;
+		}
+		
+		boolean opponMancReached = false;
+		if(ownPitNumber + stoneCount >= 13) {
+			opponMancReached = true;
+		}
+		
 		//remove stones from chosen pit and redistribute them
 		for(int i = 1; i <= stoneCount; i++) {
 			if ((pitNumber + i) == 14) {
@@ -133,11 +145,25 @@ public class MancalaBoardModel {
 			}
 			currBoard[pitNumber + i] = currBoard[pitNumber + i] + 1;
 		}
-		
 		//set the number of stones in specified pit number to 0
 		currBoard[oPitNumber] = 0;
 		
-		
+		if(turnA && opponMancReached) {
+			currBoard[13] = prevBoard[13];
+			int nextPitToGetStone = ownPitNumber + stoneCount + 1;
+			if(nextPitToGetStone > 13) {
+				nextPitToGetStone = nextPitToGetStone - 14;///////ONE ROUND?
+			}
+			currBoard[nextPitToGetStone] = currBoard[nextPitToGetStone] + 1;
+		}
+		if(!turnA && opponMancReached) {
+			currBoard[6] = prevBoard[6];
+			int nextPitToGetStone = ownPitNumber + stoneCount + 1;
+			if(nextPitToGetStone > 13) {
+				nextPitToGetStone = nextPitToGetStone - 14;///////ONE ROUND?
+			}
+			currBoard[nextPitToGetStone+6] = currBoard[nextPitToGetStone] + 1;
+		}
 		
 		
 		//all of the following changes are done in currBoard:

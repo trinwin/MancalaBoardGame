@@ -146,16 +146,12 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    JButton a5 = new JButton();//"A5");  
 	    JButton a6 = new JButton();//"A6"); 
 	    
-	    //JButton m1 = new JButton();
-	    
 	    JButton b1 = new JButton();//"B1");  
 	    JButton b2 = new JButton();//"B2");  
 	    JButton b3 = new JButton();//"B3");  
 	    JButton b4 = new JButton();//"B4");  
 	    JButton b5 = new JButton();//"B5");  
 	    JButton b6 = new JButton();//"B6");  
-	    
-	    //JButton m2 = new JButton();
 	    
 	    //ArrayList<JButton> pits = new ArrayList<>();
 	    pits.add(a1);
@@ -165,8 +161,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    pits.add(a5);
 	    pits.add(a6);
 	    
-	    //pits.add(m1);
-	    
 	    pits.add(b1);
 	    pits.add(b2);
 	    pits.add(b3);
@@ -174,17 +168,11 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    pits.add(b5);
 	    pits.add(b6);
 	    
-	    //pits.add(m2);
-	    
 	    for(int i = 0; i < pits.size(); i ++) {
 	    	
 	    	pits.get(i).setBackground(new Color(207, 185, 154));
 			pits.get(i).setOpaque(true);
 			pits.get(i).setBorderPainted(false);
-	    	
-//	    	if(i == MANCALA_A || i == MANCALA_B) {
-//	    		continue;
-//	    	}
 	    	
     		pits.get(i).addMouseListener(new PitMouseListener(i) {
     			public void mousePressed(MouseEvent e) {
@@ -193,8 +181,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
     				theModel.move(mouseID);
     			}
     		});
-		
-	    	
 	    }
 	    
 	    int[] mancalaData= theModel.getCurrBoard();

@@ -35,7 +35,7 @@ public class Stone implements Icon {
 			
 			//int t = i/7;
 			//dy = y;
-			dx = x + i*DIAMETER;
+			dx = (x/10) + i*DIAMETER;
 
 //			if(t > 0)
 //			{
