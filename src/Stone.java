@@ -5,43 +5,51 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
 import javax.swing.Icon;
-
+/**
+ * A stone icon paints multiple stones in rows.
+ * @author dianasok
+ *
+ */
 public class Stone implements Icon {
+		
+	private static final int MAX_NUM_STONES_PER_ROW = 6;	// number of stones to draw per row
+	private static final int DIAMETER = 10;					// diameter of the stones to draw
+	private int stoneCount; 								// number of the stones to draw
+	private Color colorOfStone;								// color of the stones to draw
+	private int width;										// width of this icon
+	private int height;										// height of this icon
 	
-	private static final int DIAMETER = 10;
-	private int stoneCount; 
-	private Color colorOfStone;
-	private int width;
-	private int height;
-	
+	/**
+	 * Draws 
+	 * @param count the number of stones this Stone Icon will draw
+	 */
 	public Stone(int count) {
 		stoneCount = count;
 		colorOfStone = Color.BLUE;
-		width = 5 * DIAMETER;
-		height = 5 * DIAMETER;
+		width = MAX_NUM_STONES_PER_ROW * DIAMETER;
+		height = MAX_NUM_STONES_PER_ROW * DIAMETER;
 	}
 	
+
 	@Override
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		
-		// TODO
-		//paint stoneCount amount of Stones
-		
-		//trial:
 		Graphics2D g2 = (Graphics2D) g;
-		int dx = x;
-		int dy = y;
+		int dx = x;	//how much x changes for each stone
+		int dy = 0;	//how much y changes for each stone
+		
 		for(int i = 1; i <= stoneCount; i++) {
 			
-			//int t = i/7;
-			//dy = y;
-			dx = (x/10) + i*DIAMETER;
-
-//			if(t > 0)
-//			{
-//				dx = x;
-//			}
-			Ellipse2D.Double stone = new Ellipse2D.Double(dx, y, DIAMETER, DIAMETER);
+			// if the maximum number of stones per row has been drawn
+			// go down one row and draw again
+			if(i % MAX_NUM_STONES_PER_ROW == 0)
+			{
+				dy++;
+			}
+			
+			dx = (x/DIAMETER) + (i % MAX_NUM_STONES_PER_ROW)*DIAMETER; ///10
+			
+			Ellipse2D.Double stone = new Ellipse2D.Double(dx, y*dy + 10, DIAMETER, DIAMETER);
 			g2.setColor(colorOfStone);
 			g2.fill(stone);
 		}	
