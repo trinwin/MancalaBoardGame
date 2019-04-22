@@ -207,6 +207,10 @@ public class MancalaBoardModel {
 	public void undo() {
 		
 		currBoard = prevBoard.clone();
+		//to alert listeners of change 
+		for (ChangeListener l : listeners) {
+			l.stateChanged(new ChangeEvent(this));
+		}	
 	}
 	
 	public void attach(ChangeListener l) {

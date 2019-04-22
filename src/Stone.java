@@ -7,7 +7,6 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.Icon;
 /**
  * A stone icon paints multiple stones in rows.
- * @author dianasok
  *
  */
 public class Stone implements Icon {
