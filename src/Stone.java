@@ -9,7 +9,7 @@ import javax.swing.Icon;
  * A stone icon paints multiple stones in rows.
  *
  */
-public class Stone implements Icon {
+public class Stone implements Icon { //
 		
 	private static final int MAX_NUM_STONES_PER_ROW = 6;	// number of stones to draw per row
 	private static final int DIAMETER = 10;					// diameter of the stones to draw

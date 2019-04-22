@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
+//
 public class MancalaBoardModel {
 	
 	private static final int NUMBER_OF_PITS = 14;
