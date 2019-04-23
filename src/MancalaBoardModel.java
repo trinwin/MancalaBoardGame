@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
+//
 public class MancalaBoardModel {
 	
 	private static final int NUMBER_OF_PITS = 14;
@@ -208,6 +208,10 @@ public class MancalaBoardModel {
 	public void undo() {
 		
 		currBoard = prevBoard.clone();
+		//to alert listeners of change 
+		for (ChangeListener l : listeners) {
+			l.stateChanged(new ChangeEvent(this));
+		}	
 	}
 	
 	public void attach(ChangeListener l) {
