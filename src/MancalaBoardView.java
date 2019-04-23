@@ -38,7 +38,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		this.theModel = theModel;
 		boardLayoutStrategy = new HorizontalBoardLayout();
 		undoCountDown = MAX_NUM_OF_UNDOS;
-		turn = TURN_OF_A;
+		//turn = TURN_OF_A;
 		setUpPreferences();
 	}
 	
@@ -51,7 +51,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		this.theModel = null;
 		boardLayoutStrategy = new HorizontalBoardLayout();
 		undoCountDown = MAX_NUM_OF_UNDOS;
-		turn = TURN_OF_A;
+		//turn = TURN_OF_A;
 		setUpPreferences();
 	}
 
@@ -189,13 +189,13 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
     				int mouseID = this.getMouseListenerID();
     				System.out.println(mouseID);
     				
-    				if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) {
+    				if(/*turn == TURN_OF_A &&*/ mouseID <= LAST_PIT_OF_A) {
     					theModel.move(mouseID);
-    					turn = TURN_OF_B;
+    					//turn = TURN_OF_B;
     				}
-    				else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
+    				else if(/*turn == TURN_OF_B && */mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
     					theModel.move(mouseID);
-    					turn = TURN_OF_A;
+    					//turn = TURN_OF_A;
     				}
     			}
     		});
