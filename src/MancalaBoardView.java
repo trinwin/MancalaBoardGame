@@ -46,7 +46,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	public MancalaBoardView(MancalaBoardModel theModel) {
 		
 		this.theModel = theModel;
-		boardLayoutStrategy = new HorizontalBoardLayout();
+//		boardLayoutStrategy = new HorizontalBoardLayout();
 		
 		setUpPreferences();
 		//displayBoard();
@@ -55,7 +55,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	public MancalaBoardView() {
 		
 		this.theModel = null;
-		boardLayoutStrategy = new HorizontalBoardLayout();
+//		boardLayoutStrategy = new HorizontalBoardLayout();
 		
 		setUpPreferences();
 		//displayBoard();
@@ -183,7 +183,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
     		});
 	    }
 	    
-	    int[] mancalaData= theModel.getCurrBoard();
+	    int [] mancalaData = theModel.getCurrBoard();
 	    
 	    JLabel center = new JLabel(boardLayoutStrategy.getBoard());
 	    boardLayoutStrategy.addStones(pits, mancalaData);
@@ -249,8 +249,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
-		setSize(800, 450);
-		//setSize(400, 1000);
+
 
 	}
 	

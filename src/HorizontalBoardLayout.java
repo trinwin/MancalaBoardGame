@@ -16,13 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class HorizontalBoardLayout implements BoardLayoutStrategy{
-	
+
 	JButton mancalaB = new JButton("b"); //to change??????/
 	JButton mancalaA = new JButton("a");
-	
+
 //	public void organizePits(ArrayList<JButton> pits, JPanel panel)
 //	{
-//		
+//
 //		panel.setLayout(new GridLayout(2, 6, 30, 30));
 //		//add txt for label
 //		for(JButton pit: pits)
@@ -32,17 +32,17 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 //	}
 	
 	public void organizePitsJLabel(ArrayList<JButton> pits, JLabel label)
-	{	
+	{
 		mancalaA.setBackground(new Color(207, 185, 154));
 		mancalaA.setOpaque(true);
 		mancalaA.setBorderPainted(false);
-		
+
 		mancalaB.setBackground(new Color(207, 185, 154));
 		mancalaB.setOpaque(true);
 		mancalaB.setBorderPainted(false);
-		
+
 		label.setLayout(new FlowLayout());
-		
+
 		//JButton mancalaB = new JButton("b");
 		//JButton mancalaA = new JButton("a");
 		
@@ -55,10 +55,10 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 //		for(int i = 1; i <= 6; i++) {
 //			centerPits.add(new JTextField(5));
 //		}
-//		for(JButton pit: pits) {//must  alter for proper order 
+//		for(JButton pit: pits) {//must  alter for proper order
 //			centerPits.add(pit);
 //		}
-		
+
 		for(int i = 6; i > 0; i --) {
 			JButton pitLabel = new JButton("B" + i);
 			pitLabel.setFont(new Font("Arial", Font.PLAIN, 40));
@@ -68,14 +68,14 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 			centerPits.add(pitLabel);
 		}
 		
-		for(int i = pits.size() - 1; i >= 6; i --) {
+		for (int i = pits.size() - 1; i >= 6; i--) {
 			centerPits.add(pits.get(i));
 		}
-		for(int i = 0; i < 6; i ++) {
+		for (int i = 0; i < 6; i++) {
 			centerPits.add(pits.get(i));
 		}
-		
-		for(int i = 1; i <= 6; i ++) {
+
+		for (int i = 1; i <= 6; i++) {
 			JButton pitLabel = new JButton("A" + i);
 			pitLabel.setFont(new Font("Arial", Font.PLAIN, 40));
 			pitLabel.setBackground(new Color(102, 51, 0));
@@ -84,7 +84,6 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 			centerPits.add(pitLabel);
 		}
 
-		
 		label.add(centerPits);
 		label.add(mancalaA);
 	}
@@ -111,7 +110,7 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setColor(new Color(102, 51, 0));
 
-				Rectangle2D.Double rectangle = new Rectangle2D.Double(0, 0, 800, 400);
+				Rectangle2D.Double rectangle = new Rectangle2D.Double(0, 0, getIconWidth(), getIconHeight());
 				g2.fill(rectangle);
 			}
 
@@ -132,19 +131,18 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 	}
 
 	@Override
-	public void addStones(ArrayList<JButton> pits, int[] mancalaData) {
-		
+	public void addStones(ArrayList<JButton> pits, int [] mancalaData) {
 		// TODO, consider:
 		for(int i = 0; i < mancalaData.length; i++) {
 	
-			if(i == 6) { //mancala a
+			if(i == 6) { // Mancala A
 				System.out.println(mancalaData[i]);
 				Stone stones = new Stone(mancalaData[i]);
 				stones.setIconHeight(100);
 				stones.setIconWidth(50);
 				mancalaA.setIcon(stones);
 				
-			}else if(i == 13) {
+			}else if(i == 13) { // Mancala B
 				System.out.println(mancalaData[i]);
 				Stone stones = new Stone(mancalaData[i]);
 				stones.setIconHeight(100);
@@ -158,11 +156,7 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 				} else{
 					pits.get(i).setIcon(new Stone(mancalaData[i]));
 				}
-				
 			}
-			
 		}
 	}
-	
-	
 }

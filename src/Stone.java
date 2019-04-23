@@ -3,7 +3,6 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-
 import javax.swing.Icon;
 
 public class Stone implements Icon {

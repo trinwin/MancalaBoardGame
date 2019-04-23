@@ -1,11 +1,12 @@
 import java.util.ArrayList;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class MancalaBoardModel {
 	
 	private static final int NUMBER_OF_PITS = 14;
+
+	//Position of Mancala A and B in the ArrayList
 	private static final int A_MANCALA = 6;
 	private static final int B_MANCALA = 13;
 	
