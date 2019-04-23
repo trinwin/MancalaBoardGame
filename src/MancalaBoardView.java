@@ -238,7 +238,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(undoCountDown <= 0) {
+				if(undoCountDown < 0) {
 					undoCountText.setText("Oops! Undo max has been reached.");
 				} else {
 					undoCountDown--;
