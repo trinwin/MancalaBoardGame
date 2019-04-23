@@ -11,13 +11,21 @@ import javax.swing.event.ChangeListener;
 
 public class MancalaBoardView extends JFrame implements ChangeListener { //
 	
+	private static final int LAST_PIT_OF_B = 11;
+	private static final int FIRST_PIT_OF_B = 6;
+	
+	private static final int LAST_PIT_OF_A = 5;
+	
+	private static final int TURN_OF_A = 0;
+	private static final int TURN_OF_B = 1;
+	
 	private static final int MAX_NUM_OF_UNDOS = 3;
 	
 	private MancalaBoardModel theModel;						// the model
 	private BoardLayoutStrategy boardLayoutStrategy;		// general strategy 
 	private ArrayList<JButton> pits = new ArrayList<>(); 	// JButtons representing pits
 	
-	private int undoCount;
+	private int undoCountDown;
 	private int turn; //0 - A; 1 - B
 	
 	/**
@@ -29,8 +37,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		
 		this.theModel = theModel;
 		boardLayoutStrategy = new HorizontalBoardLayout();
-		undoCount = 0;
-		turn = 0;
+		undoCountDown = MAX_NUM_OF_UNDOS;
+		turn = TURN_OF_A;
 		setUpPreferences();
 	}
 	
@@ -42,8 +50,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		
 		this.theModel = null;
 		boardLayoutStrategy = new HorizontalBoardLayout();
-		undoCount = 0;
-		turn = 0;
+		undoCountDown = MAX_NUM_OF_UNDOS;
+		turn = TURN_OF_A;
 		setUpPreferences();
 	}
 
@@ -180,7 +188,15 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
     			public void mousePressed(MouseEvent e) {
     				int mouseID = this.getMouseListenerID();
     				System.out.println(mouseID);
-    				theModel.move(mouseID);
+    				
+    				if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) {
+    					theModel.move(mouseID);
+    					turn = TURN_OF_B;
+    				}
+    				else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
+    					theModel.move(mouseID);
+    					turn = TURN_OF_A;
+    				}
     			}
     		});
 	    }
@@ -205,7 +221,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		JPanel south = new JPanel();
 		
 		JTextField undoCountText = new JTextField(20);
-		undoCountText.setText("Number of undos:");
+		undoCountText.setText("Number of undos: " + undoCountDown);
 		
 		JTextField player = new JTextField(20);
 		player.setText("Player A's Turn");
@@ -215,15 +231,15 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(undoCount >= MAX_NUM_OF_UNDOS) {
+				if(undoCountDown <= 0) {
 					undoCountText.setText("Oops! Undo max has been reached.");
 				} else {
-					undoCount++;
-					undoCountText.setText("Number of undos: " + undoCount);
+					undoCountDown--;
+					undoCountText.setText("Number of undos: " + undoCountDown);
 					theModel.undo();
 					
-					if(undoCount == MAX_NUM_OF_UNDOS) {
-						undoCountText.setText("Number of undos: " + undoCount + ": MAX REACHED");
+					if(undoCountDown == 0) {
+						undoCountText.setText("Number of undos: " + undoCountDown + ": MAX REACHED");
 					}
 				}
 
