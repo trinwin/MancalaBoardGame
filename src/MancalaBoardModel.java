@@ -122,83 +122,84 @@ public class MancalaBoardModel {
 			pitNumber = pitNumber +1;
 			ownPitNumber = pitNumber - 7;
 		}
-
-		prevBoard = currBoard.clone(); //save board prior to move to allow undo option
-		lastStoneInMancala = false;
-		//save the number of stones in the pit number in variable stoneCount
-		int stoneCount = currBoard[pitNumber];
-		int oPitNumber = pitNumber; 
-		int endingPit = pitNumber + stoneCount;
-		
-		boolean opponMancReached = false;
-		if(ownPitNumber + stoneCount >= 13) {
-			opponMancReached = true;
-		}
-		//remember: if the player's last stone lands in her Mancala, she gets another turn
-		//in this case, just set lastStoneInMancala to True
-		if(ownPitNumber + stoneCount == 6) {
-			lastStoneInMancala = true;
-			System.out.println("You get another turn!");
-		}
-		
-		//remove stones from chosen pit and redistribute them
-		for(int i = 1; i <= stoneCount; i++) {
-			if ((pitNumber + i) == 14) {
-				pitNumber = -1*i;//Looping around the board once b6 pit has been reached
+		if(currBoard[pitNumber] != 0) {
+			prevBoard = currBoard.clone(); //save board prior to move to allow undo option
+			lastStoneInMancala = false;
+			//save the number of stones in the pit number in variable stoneCount
+			int stoneCount = currBoard[pitNumber];
+			int oPitNumber = pitNumber; 
+			int endingPit = pitNumber + stoneCount;
+			
+			boolean opponMancReached = false;
+			if(ownPitNumber + stoneCount >= 13) {
+				opponMancReached = true;
 			}
-			currBoard[pitNumber + i] = currBoard[pitNumber + i] + 1;
-		}
-		//set the number of stones in specified pit number to 0
-		currBoard[oPitNumber] = 0;
-	
-		//ending pit is empty: add stones in pit and opponent's stone into own mancala
-		if(turnA && endingPit <= 5 && prevBoard[endingPit] == 0 && !opponMancReached) {
-			currBoard[endingPit] = 0;
-			int opponStones = currBoard[endingPit + (2*(6-endingPit))];
-			currBoard[A_MANCALA] = currBoard[A_MANCALA] + opponStones + 1;
-			currBoard[endingPit + (2*(6-endingPit))] = 0;
-		}
-		
-		if(!turnA && endingPit > 6 && endingPit < 13 && prevBoard[endingPit] == 0 && !opponMancReached) {
-			currBoard[endingPit] = 0;
-			int opponStones = currBoard[endingPit - (2*(endingPit - 6))];
-			currBoard[B_MANCALA] = currBoard[B_MANCALA] + opponStones + 1;
-			currBoard[endingPit - (2*(endingPit - 6))] = 0;
-		}
-		
-		//When you loop through opponents side and reach your own again
-		if(turnA && opponMancReached) {
-			currBoard[13] = prevBoard[13];
-			int nextPitToGetStone = ownPitNumber + stoneCount + 1;
-			if(nextPitToGetStone > 13) {
-				nextPitToGetStone = nextPitToGetStone - 14;///////ONE ROUND?
+			//remember: if the player's last stone lands in her Mancala, she gets another turn
+			//in this case, just set lastStoneInMancala to True
+			if(ownPitNumber + stoneCount == 6) {
+				lastStoneInMancala = true;
+				System.out.println("You get another turn!");
 			}
-			currBoard[nextPitToGetStone] = currBoard[nextPitToGetStone] + 1;
-			if(prevBoard[nextPitToGetStone] == 0) {	//if ending pit was previously empty
-				currBoard[nextPitToGetStone] = 0;
-				int opponStones = currBoard[nextPitToGetStone + (2*(6-nextPitToGetStone))];
+			
+			//remove stones from chosen pit and redistribute them
+			for(int i = 1; i <= stoneCount; i++) {
+				if ((pitNumber + i) == 14) {
+					pitNumber = -1*i;//Looping around the board once b6 pit has been reached
+				}
+				currBoard[pitNumber + i] = currBoard[pitNumber + i] + 1;
+			}
+			//set the number of stones in specified pit number to 0
+			currBoard[oPitNumber] = 0;
+		
+			//ending pit is empty: add stones in pit and opponent's stone into own mancala
+			if(turnA && endingPit <= 5 && prevBoard[endingPit] == 0 && !opponMancReached) {
+				currBoard[endingPit] = 0;
+				int opponStones = currBoard[endingPit + (2*(6-endingPit))];
 				currBoard[A_MANCALA] = currBoard[A_MANCALA] + opponStones + 1;
-				currBoard[nextPitToGetStone + (2*(6-nextPitToGetStone))] = 0;
+				currBoard[endingPit + (2*(6-endingPit))] = 0;
 			}
-		}
-		if(!turnA && opponMancReached) {
-			currBoard[6] = prevBoard[6];
-			int nextPitToGetStone = ownPitNumber + stoneCount + 1;
-			if(nextPitToGetStone > 13) {
-				nextPitToGetStone = nextPitToGetStone - 14;///////ONE ROUND?
-			}
-			currBoard[nextPitToGetStone + 7] = currBoard[nextPitToGetStone + 7] + 1;
-			if(prevBoard[nextPitToGetStone + 7] == 0) {
-				currBoard[nextPitToGetStone + 7] = 0;
-				int opponStones = currBoard[nextPitToGetStone + 7 + (2*(6 - (nextPitToGetStone + 7)))];
+			
+			if(!turnA && endingPit > 6 && endingPit < 13 && prevBoard[endingPit] == 0 && !opponMancReached) {
+				currBoard[endingPit] = 0;
+				int opponStones = currBoard[endingPit - (2*(endingPit - 6))];
 				currBoard[B_MANCALA] = currBoard[B_MANCALA] + opponStones + 1;
-				currBoard[nextPitToGetStone + 7 + (2*(6 - (nextPitToGetStone + 7)))] = 0;
+				currBoard[endingPit - (2*(endingPit - 6))] = 0;
 			}
-		}
-
-		//to alert listeners of change 
-		for (ChangeListener l : listeners) {
-			l.stateChanged(new ChangeEvent(this));
+			
+			//When you loop through opponents side and reach your own again
+			if(turnA && opponMancReached) {
+				currBoard[13] = prevBoard[13];
+				int nextPitToGetStone = ownPitNumber + stoneCount + 1;
+				if(nextPitToGetStone > 13) {
+					nextPitToGetStone = nextPitToGetStone - 14;///////ONE ROUND?
+				}
+				currBoard[nextPitToGetStone] = currBoard[nextPitToGetStone] + 1;
+				if(prevBoard[nextPitToGetStone] == 0) {	//if ending pit was previously empty
+					currBoard[nextPitToGetStone] = 0;
+					int opponStones = currBoard[nextPitToGetStone + (2*(6-nextPitToGetStone))];
+					currBoard[A_MANCALA] = currBoard[A_MANCALA] + opponStones + 1;
+					currBoard[nextPitToGetStone + (2*(6-nextPitToGetStone))] = 0;
+				}
+			}
+			if(!turnA && opponMancReached) {
+				currBoard[6] = prevBoard[6];
+				int nextPitToGetStone = ownPitNumber + stoneCount + 1;
+				if(nextPitToGetStone > 13) {
+					nextPitToGetStone = nextPitToGetStone - 14;///////ONE ROUND?
+				}
+				currBoard[nextPitToGetStone + 7] = currBoard[nextPitToGetStone + 7] + 1;
+				if(prevBoard[nextPitToGetStone + 7] == 0) {
+					currBoard[nextPitToGetStone + 7] = 0;
+					int opponStones = currBoard[nextPitToGetStone + 7 + (2*(6 - (nextPitToGetStone + 7)))];
+					currBoard[B_MANCALA] = currBoard[B_MANCALA] + opponStones + 1;
+					currBoard[nextPitToGetStone + 7 + (2*(6 - (nextPitToGetStone + 7)))] = 0;
+				}
+			}
+	
+			//to alert listeners of change 
+			for (ChangeListener l : listeners) {
+				l.stateChanged(new ChangeEvent(this));
+			}
 		}	
 	}
 	

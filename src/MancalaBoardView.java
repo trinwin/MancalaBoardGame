@@ -1,49 +1,31 @@
-//testing push
-//testintint
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class MancalaBoardView extends JFrame implements ChangeListener { //
 	
-//	private static final int PIT_A1 = 1;
-//	private static final int PIT_A2 = 2;
-//	private static final int PIT_A3 = 3;
-//	private static final int PIT_A4 = 4;
-//	private static final int PIT_A5 = 5;
-//	private static final int PIT_A6 = 6;
-//	
-//	private static final int PIT_B1 = 8;
-//	private static final int PIT_B2 = 9;
-//	private static final int PIT_B3 = 10;
-//	private static final int PIT_B4 = 11;
-//	private static final int PIT_B5 = 12;
-//	private static final int PIT_B6 = 13;
+	private static final int LAST_PIT_OF_B = 11;
+	private static final int FIRST_PIT_OF_B = 6;
 	
-	private static final int MANCALA_A = 6;
-	private static final int MANCALA_B = 13;
+	private static final int LAST_PIT_OF_A = 5;
 	
-	private MancalaBoardModel theModel;
+	private static final int TURN_OF_A = 0;
+	private static final int TURN_OF_B = 1;
 	
-	private BoardLayoutStrategy boardLayoutStrategy;
-
-	private ArrayList<JButton> pits = new ArrayList<>();
+	private static final int MAX_NUM_OF_UNDOS = 3;
 	
-	private int undoCount;
+	private MancalaBoardModel theModel;						// the model
+	private BoardLayoutStrategy boardLayoutStrategy;		// general strategy 
+	private ArrayList<JButton> pits = new ArrayList<>(); 	// JButtons representing pits
+	
+	private int undoCountDown;
 	private int turn; //0 - A; 1 - B
 	
 	/**
@@ -55,8 +37,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		
 		this.theModel = theModel;
 		boardLayoutStrategy = new HorizontalBoardLayout();
-		undoCount = 0;
-		turn = 0;
+		undoCountDown = MAX_NUM_OF_UNDOS;
+		//turn = TURN_OF_A;
 		setUpPreferences();
 	}
 	
@@ -68,8 +50,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		
 		this.theModel = null;
 		boardLayoutStrategy = new HorizontalBoardLayout();
-		undoCount = 0;
-		turn = 0;
+		undoCountDown = MAX_NUM_OF_UNDOS;
+		//turn = TURN_OF_A;
 		setUpPreferences();
 	}
 
@@ -163,20 +145,20 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		setLayout(new BorderLayout(20, 20));
 
 		// Buttons representing pits belonging to player A
-	    JButton a1 = new JButton();//"A1"); 
-	    JButton a2 = new JButton();//"A2");  
-	    JButton a3 = new JButton();//"A3");
-	    JButton a4 = new JButton();//"A4"); 
-	    JButton a5 = new JButton();//"A5");  
-	    JButton a6 = new JButton();//"A6"); 
+	    JButton a1 = new JButton();
+	    JButton a2 = new JButton(); 
+	    JButton a3 = new JButton();
+	    JButton a4 = new JButton();
+	    JButton a5 = new JButton();
+	    JButton a6 = new JButton();
 	    
 	    // Buttons representing pits belonging to player B
-	    JButton b1 = new JButton();//"B1");  
-	    JButton b2 = new JButton();//"B2");  
-	    JButton b3 = new JButton();//"B3");  
-	    JButton b4 = new JButton();//"B4");  
-	    JButton b5 = new JButton();//"B5");  
-	    JButton b6 = new JButton();//"B6"); 	    
+	    JButton b1 = new JButton();
+	    JButton b2 = new JButton(); 
+	    JButton b3 = new JButton();
+	    JButton b4 = new JButton();
+	    JButton b5 = new JButton();
+	    JButton b6 = new JButton(); 	    
 	    
 	    // Add JButtons belonging to player A to ArrayList of pits
 	    pits.add(a1);
@@ -206,7 +188,22 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
     			public void mousePressed(MouseEvent e) {
     				int mouseID = this.getMouseListenerID();
     				System.out.println(mouseID);
-    				theModel.move(mouseID);
+    				if(undoCountDown == 0 && turn == TURN_OF_A) {
+    					undoCountDown = MAX_NUM_OF_UNDOS;
+    					turn = TURN_OF_B;
+    				}
+    				else if(undoCountDown == 0 && turn == TURN_OF_B) {
+    					undoCountDown = MAX_NUM_OF_UNDOS;
+    					turn = TURN_OF_A;
+    				}
+    				if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) {
+    					theModel.move(mouseID);
+    					turn = TURN_OF_B;
+    				}
+    				else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
+    					theModel.move(mouseID);
+    					turn = TURN_OF_A;
+    				}
     			}
     		});
 	    }
@@ -221,47 +218,17 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 	    
 	    // North
 	    // practice:
-		JButton test1 = new JButton("A test 1");
-		JButton test = new JButton("A test");
-		
-		test.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//call model's move
-				//get the data model 
-				test.setText("pressed");
-				test1.setText("test was pressed");
-				//repaint();
-			}
-			
-		});
-		
-		test1.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//model's move
-				test1.setText("pressed");
-				test.setText("test1 was pressed");
-				//test1.setIcon(new GreenStone());
-				//repaint();
-			}
-			
-		});
+	    JTextField announcements = new JTextField("Play game!");
 
 	    JPanel north = new JPanel();
-		north.add(test);
-		north.add(test1);
+		north.add(announcements);
 		add(north, BorderLayout.NORTH);
 		
 		//south panel
 		JPanel south = new JPanel();
 		
 		JTextField undoCountText = new JTextField(20);
-		undoCountText.setText("Number of undos:");
+		undoCountText.setText("Number of undos: " + undoCountDown);
 		
 		JTextField player = new JTextField(20);
 		player.setText("Player A's Turn");
@@ -271,9 +238,24 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				undoCount++;
-				undoCountText.setText("Number of undos: " + undoCount);
-				theModel.undo();
+				if(undoCountDown < 0) {
+					undoCountText.setText("Oops! Undo max has been reached.");
+				} else {
+					undoCountDown--;
+					undoCountText.setText("Number of undos: " + undoCountDown);
+					theModel.undo();
+					
+					if(turn == TURN_OF_A) {
+						turn = TURN_OF_B;
+					} else {
+						turn = TURN_OF_A;
+					}
+					
+					if(undoCountDown == 0) {
+						undoCountText.setText("Number of undos: " + undoCountDown + ": MAX REACHED");
+					}
+				}
+
 			}
 			
 		});
@@ -295,14 +277,13 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 	public static void main(String[] args) {
 		MancalaBoardModel aModel = new MancalaBoardModel();
 		MancalaBoardView aView = new MancalaBoardView(aModel);
-		//aView.displayBoard();
 		aModel.attach(aView);
 	}
 	
 	public void stateChanged(ChangeEvent e) { //Refer to Cay Hortsmann BarFrame
 		int[] mancalaData= theModel.getCurrBoard();
 		boardLayoutStrategy.addStones(pits, mancalaData);
-		//repaint();
+		repaint();
 		//if theModel.isGameOver find the winner and display
 	}
 	
