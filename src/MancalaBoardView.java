@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-public class MancalaBoardView extends JFrame implements ChangeListener { //
+/**
+ * The View and Controller. 
+ * @author dianasok
+ *
+ */
+public class MancalaBoardView extends JFrame implements ChangeListener { 
 	
 	private static final int LAST_PIT_OF_B = 11;
 	private static final int FIRST_PIT_OF_B = 6;
