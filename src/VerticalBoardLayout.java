@@ -9,8 +9,9 @@ import javax.swing.JPanel;
 public class VerticalBoardLayout implements BoardLayoutStrategy
 {
 
-	JButton mancalaA = new JButton("A");
-	JButton mancalaB = new JButton("B");
+	JButton mancalaA = new JButton();
+	JButton mancalaB = new JButton();
+
 
 	/**
 	 *
@@ -21,7 +22,6 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 
 			@Override
 			public void paintIcon(Component c, Graphics g, int x, int y) {
-
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setColor(new Color(102, 51, 0));
 
@@ -31,14 +31,12 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 
 			@Override
 			public int getIconWidth() {
-				// TODO Auto-generated method stub
 				return 700;
 			}
 
 			@Override
 			public int getIconHeight() {
-				// TODO Auto-generated method stub
-				return 720;
+				return 730;
 			}
 		};
 
@@ -53,7 +51,7 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 	public void organizePitsJLabel(ArrayList<JButton> pits, JLabel label)
 	{
 		//Set up Mancala A and B
-		mancalaA.setSize(new Dimension(100, 60));
+		mancalaA.setPreferredSize(new Dimension(100, 60));
 		mancalaA.setBackground(new Color(207, 185, 154));
 		mancalaA.setOpaque(true);
 		mancalaA.setBorderPainted(false);
@@ -63,18 +61,33 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 		mancalaB.setOpaque(true);
 		mancalaB.setBorderPainted(false);
 
+
+		JButton mancalaBLabel = new JButton("B");
+		mancalaBLabel.setFont(new Font("Dotum", Font.PLAIN, 30));
+		mancalaBLabel.setBackground(new Color(102, 51, 0));
+		mancalaBLabel.setForeground(Color.WHITE);
+		mancalaBLabel.setOpaque(true);
+		mancalaBLabel.setBorderPainted(false);
+
+		JButton mancalaALabel = new JButton("A");
+		mancalaALabel.setFont(new Font("Dotum", Font.PLAIN, 30));
+		mancalaALabel.setBackground(new Color(102, 51, 0));
+		mancalaALabel.setForeground(Color.WHITE);
+		mancalaALabel.setOpaque(true);
+		mancalaALabel.setBorderPainted(false);
+
+
 		//Set board layout and add 2 Mancala
 		label.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridwidth = 0;
-		gbc.gridheight = 3;
-
-//		gbc.weightx = 0.0;
-//		gbc.ipady = 20;
-//        gbc.gridx = 1;
-		gbc.weighty = 0.5;
+		gbc.gridwidth = 0; // 1 column
+		gbc.gridheight = 3; // 3 rows
+		gbc.weighty = 0.3;
         gbc.anchor = GridBagConstraints.CENTER;
+
+        label.add(mancalaBLabel, gbc);
         label.add(mancalaB, gbc);
+
 
 		//Create A and B pits
 		JPanel centerPits = new JPanel();
@@ -86,6 +99,7 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 			JButton pitALabel = new JButton("A" + i);
 			pitALabel.setFont(new Font("Dotum", Font.PLAIN, 30));
 			pitALabel.setBackground(new Color(102, 51, 0));
+			pitALabel.setForeground(Color.WHITE);
 			pitALabel.setOpaque(true);
 			pitALabel.setBorderPainted(false);
 			centerPits.add(pitALabel);
@@ -99,18 +113,21 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 			//Add Pit B Labels
 			JButton pitBLabel = new JButton("B" + j);
 			pitBLabel.setFont(new Font("Dotum", Font.PLAIN, 30));
+			pitBLabel.setForeground(Color.WHITE);
 			pitBLabel.setBackground(new Color(102, 51, 0));
 			pitBLabel.setOpaque(true);
 			pitBLabel.setBorderPainted(false);
 			centerPits.add(pitBLabel);
 		}
 
-
 		gbc.gridy = GridBagConstraints.RELATIVE;
 		label.add(centerPits, gbc);
 
 		gbc.gridy = GridBagConstraints.PAGE_END;
         label.add(mancalaA, gbc);
+
+		gbc.gridy = GridBagConstraints.RELATIVE;
+		label.add(mancalaALabel, gbc);
 
 	}
 
@@ -128,12 +145,12 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 
 			if(i == 6) { // Mancala A
 				stones.setIconHeight(100);
-				stones.setIconWidth(30);
+				stones.setIconWidth(50);
 				mancalaA.setIcon(stones);
 
 			}else if(i == 13) { // Mancala B
 				stones.setIconHeight(100);
-				stones.setIconWidth(30);
+				stones.setIconWidth(50);
 				mancalaB.setIcon(stones);
 			} else {
 				if(i > 6) {
