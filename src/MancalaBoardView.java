@@ -26,6 +26,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 	private ArrayList<JButton> pits = new ArrayList<>(); 	// JButtons representing pits
 	
 	private int undoCountDown;
+	private int undoCountDownA;
+	private int undoCountDownB;
 	private int turn; //0 - A; 1 - B
 	
 	/**
@@ -38,6 +40,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		this.theModel = theModel;
 		boardLayoutStrategy = new HorizontalBoardLayout();
 		undoCountDown = MAX_NUM_OF_UNDOS;
+		undoCountDownA = MAX_NUM_OF_UNDOS;
+		undoCountDownB = MAX_NUM_OF_UNDOS;
 		//turn = TURN_OF_A;
 		setUpPreferences();
 	}
@@ -51,6 +55,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		this.theModel = null;
 		boardLayoutStrategy = new HorizontalBoardLayout();
 		undoCountDown = MAX_NUM_OF_UNDOS;
+		undoCountDownA = MAX_NUM_OF_UNDOS;
+		undoCountDownB = MAX_NUM_OF_UNDOS;
 		//turn = TURN_OF_A;
 		setUpPreferences();
 	}
@@ -188,22 +194,68 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
     			public void mousePressed(MouseEvent e) {
     				int mouseID = this.getMouseListenerID();
     				System.out.println(mouseID);
-    				if(undoCountDown == 0 && turn == TURN_OF_A) {
-    					undoCountDown = MAX_NUM_OF_UNDOS;
-    					turn = TURN_OF_B;
+    				
+    				if(undoCountDownA == 0 && turn == TURN_OF_B && mouseID <= LAST_PIT_OF_A) {
+    					theModel.move(mouseID);
+    					//turn = TURN_OF_B;
+    					undoCountDownB = MAX_NUM_OF_UNDOS;
     				}
-    				else if(undoCountDown == 0 && turn == TURN_OF_B) {
-    					undoCountDown = MAX_NUM_OF_UNDOS;
-    					turn = TURN_OF_A;
+    				
+    				else if(undoCountDownB == 0 && turn == TURN_OF_A && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
+    					theModel.move(mouseID);
+    					//turn = TURN_OF_A;
+    					undoCountDownA = MAX_NUM_OF_UNDOS;
     				}
-    				if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) {
+    				else if(undoCountDownA < 0 && turn == TURN_OF_B) {
+    					System.out.println("not turn");
+    				}
+    				else if(undoCountDownB < 0 && turn == TURN_OF_A) {
+    					System.out.println("not turn");
+    				}
+    				
+//    				if(undoCountDown == 0 && turn == TURN_OF_A) {
+//    					undoCountDown --;
+//    				}
+//    				else if(undoCountDown == 0 && turn == TURN_OF_B) {
+//    					undoCountDown = MAX_NUM_OF_UNDOS;
+//    					turn = TURN_OF_A;
+//    				}
+    				else if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) { //
     					theModel.move(mouseID);
     					turn = TURN_OF_B;
+    					undoCountDownB = MAX_NUM_OF_UNDOS; 
     				}
     				else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
     					theModel.move(mouseID);
     					turn = TURN_OF_A;
+    					undoCountDownA = MAX_NUM_OF_UNDOS;
     				}
+//    				
+//    				if(undoCountDown < 0 && turn == TURN_OF_A) {
+//    					undoCountDown = MAX_NUM_OF_UNDOS;
+//    					turn = TURN_OF_B;
+//    				}
+//    				else if (undoCountDown < 0 && turn == TURN_OF_B)
+//    				{
+//    					undoCountDown = MAX_NUM_OF_UNDOS;
+//    					turn = TURN_OF_A;	
+//    				} 
+//    				else if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) {
+//    					theModel.move(mouseID);
+//    					turn = TURN_OF_B;
+//    					if(undoCountDown == 0)
+//    					{
+//    						undoCountDown--;
+//    					}
+//    				}
+//    				else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
+//    					theModel.move(mouseID);
+//    					turn = TURN_OF_A;
+//    					if(undoCountDown == 0)
+//    					{
+//    						undoCountDown--;
+//    					}
+//    				}
     			}
     		});
 	    }
@@ -228,7 +280,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 		JPanel south = new JPanel();
 		
 		JTextField undoCountText = new JTextField(20);
-		undoCountText.setText("Number of undos: " + undoCountDown);
+		undoCountText.setText("Number of undos: 3");
 		
 		JTextField player = new JTextField(20);
 		player.setText("Player A's Turn");
@@ -238,23 +290,49 @@ public class MancalaBoardView extends JFrame implements ChangeListener { //
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(undoCountDown < 0) {
+				if(turn == TURN_OF_B && undoCountDownA <= 0) {
 					undoCountText.setText("Oops! Undo max has been reached.");
-				} else {
-					undoCountDown--;
-					undoCountText.setText("Number of undos: " + undoCountDown);
-					theModel.undo();
-					
-					if(turn == TURN_OF_A) {
+				} 
+				if(turn == TURN_OF_A && undoCountDownB <= 0) {
+					undoCountText.setText("Oops! Undo max has been reached.");
+				}
+				else if(turn == TURN_OF_A) {
+					//undoCountDownA--;
+					if(undoCountDownB != 0) {
+						undoCountDownB--;
+						undoCountText.setText("Number of undos: " + undoCountDownB);
+						theModel.undo();
 						turn = TURN_OF_B;
-					} else {
-						turn = TURN_OF_A;
+						undoCountDownA = MAX_NUM_OF_UNDOS;
 					}
-					
-					if(undoCountDown == 0) {
-						undoCountText.setText("Number of undos: " + undoCountDown + ": MAX REACHED");
+
+				}
+				else if(turn == TURN_OF_B) {
+					//undoCountDownB--;
+					if(undoCountDownA != 0) {
+						undoCountDownA--;
+						undoCountText.setText("Number of undos: " + undoCountDownA);
+						theModel.undo();
+						turn = TURN_OF_A;
+						undoCountDownB = MAX_NUM_OF_UNDOS;
+				
 					}
 				}
+					//else {
+//					undoCountDown--;
+//					undoCountText.setText("Number of undos: " + undoCountDown);
+//					theModel.undo();
+//					
+//					if(turn == TURN_OF_A) {
+//						turn = TURN_OF_B;
+//					} else {
+//						turn = TURN_OF_A;
+//					}
+//					
+//					if(undoCountDown == 0) {
+//						undoCountText.setText("Number of undos: " + undoCountDown + ": MAX REACHED");
+//					}
+//				}
 
 			}
 			
