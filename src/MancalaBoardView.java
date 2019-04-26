@@ -328,7 +328,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		pack();
 		setVisible(true);
 
-
 	}
 	
 	public static void main(String[] args) {

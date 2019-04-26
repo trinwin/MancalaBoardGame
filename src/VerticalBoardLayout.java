@@ -8,10 +8,8 @@ import javax.swing.JPanel;
 
 public class VerticalBoardLayout implements BoardLayoutStrategy
 {
-
 	JButton mancalaA = new JButton();
 	JButton mancalaB = new JButton();
-
 
 	/**
 	 *
@@ -161,6 +159,4 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 			}
 		}
 	}
-
-	
 }

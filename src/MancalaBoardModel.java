@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-//
+
 public class MancalaBoardModel {
 	
 	private static final int NUMBER_OF_PITS = 14;
@@ -99,14 +99,19 @@ public class MancalaBoardModel {
 	/**
 	 * Checks if the game is over when pits belonging to either player are all empty.
 	 * @return true if the pits belonging to any player are all empty
+	 * HERE
 	 */
 	public boolean isGameOver() {
 		
 		// to be implemented
 		//just check if row of pits belonging to either player is all 0
 		//remember to not include value in Mancala while checking!
+		//Winner
 		
 		return false;
+	}
+	public int winner(){
+		return 0;
 	}
 	
 	/**
