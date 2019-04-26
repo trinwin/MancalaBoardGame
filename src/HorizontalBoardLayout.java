@@ -23,7 +23,7 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 	JButton mancalaB = new JButton();	// JButton representing Mancala B
 	JButton mancalaA = new JButton();	// JButton representing Mancala A
 
-git
+
 	public Icon getBoard() {
 
 		Icon board = new Icon() {
