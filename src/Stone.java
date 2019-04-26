@@ -10,7 +10,7 @@ import javax.swing.Icon;
  */
 public class Stone implements Icon {
 		
-	private static final int MAX_NUM_STONES_PER_ROW = 6;	// number of stones to draw per row
+	private static final int MAX_NUM_STONES_PER_ROW = 7;	// number of stones to draw per row
 	private static final int DIAMETER = 10;					// diameter of the stones to draw
 	private int stoneCount; 								// number of the stones to draw
 	private Color colorOfStone;								// color of the stones to draw
@@ -23,7 +23,7 @@ public class Stone implements Icon {
 	 */
 	public Stone(int count) {
 		stoneCount = count;
-		colorOfStone = Color.BLUE;
+		colorOfStone = Color.WHITE;
 		width = MAX_NUM_STONES_PER_ROW * DIAMETER;
 		height = MAX_NUM_STONES_PER_ROW * DIAMETER;
 	}
@@ -33,26 +33,21 @@ public class Stone implements Icon {
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		
 		Graphics2D g2 = (Graphics2D) g;
-		int dx = x;	//how much x changes for each stone
-		int dy = 0;	//how much y changes for each stone
 
-
-		//if mancala
-		//i%5 ==0 i!=0
-		//x original pos
-		//y+=4-
 		for(int i = 1; i <= stoneCount; i++) {
-			
-			// if the maximum number of stones per row has been drawn
-			// go down one row and draw again
-			if(i % MAX_NUM_STONES_PER_ROW == 0)
-			{
-				dy++;
+
+			if (i == 1){
+				x = DIAMETER;
+
+			} else if ((i-1) % MAX_NUM_STONES_PER_ROW == 0 ) {
+				x = DIAMETER;
+				y += (DIAMETER + 1);
+
+			} else {
+				x += (DIAMETER + 1);
 			}
-			
-			dx = (x/DIAMETER) + (i % MAX_NUM_STONES_PER_ROW)*DIAMETER; ///10
-			
-			Ellipse2D.Double stone = new Ellipse2D.Double(dx, y*dy + 10, DIAMETER, DIAMETER);
+
+			Ellipse2D.Double stone = new Ellipse2D.Double(x, y, DIAMETER, DIAMETER);
 			g2.setColor(colorOfStone);
 			g2.fill(stone);
 		}	

@@ -1,10 +1,4 @@
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -40,7 +34,7 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 
 			@Override
 			public int getIconWidth() {
-				return 850;
+				return 1100;
 			}
 
 			@Override
@@ -71,11 +65,13 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 
 		// Set Mancala A JButton color
 		mancalaA.setBackground(new Color(207, 185, 154));
+		mancalaA.setPreferredSize(new Dimension(100,70));
 		mancalaA.setOpaque(true);
 		mancalaA.setBorderPainted(false);
 
 		// Set Mancala B JButton color
 		mancalaB.setBackground(new Color(207, 185, 154));
+		mancalaB.setPreferredSize(new Dimension(100,70));
 		mancalaB.setOpaque(true);
 		mancalaB.setBorderPainted(false);
 
@@ -86,6 +82,7 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 
 		// JPanel to add pit JButtons onto
 		JPanel centerPits = new JPanel();
+
 		centerPits.setOpaque(false);
 		centerPits.setLayout(new GridLayout(4, 6, 10, 10));
 
@@ -132,16 +129,14 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 		// TODO, consider:
 		for(int i = 0; i < mancalaData.length; i++) {
 			Stone stones = new Stone(mancalaData[i]);
-
+			stones.setIconHeight(60);
+			stones.setIconWidth(100);
 			if(i == 6) { //Mancala A
-				stones.setIconHeight(100);
-				stones.setIconWidth(50);
 				mancalaA.setIcon(stones);
+
 			} else if(i == 13) { // Mancala B
-				stones.setIconHeight(100);
-				stones.setIconWidth(50);
 				mancalaB.setIcon(stones);
-				
+
 			} else {
 				if(i > 6) {
 					pits.get(i - 1).setIcon(stones);

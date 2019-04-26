@@ -1,6 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -194,6 +192,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    	
 	    	// Set the background of each pit JButton to light brown
 	    	pits.get(i).setBackground(new Color(207, 185, 154));
+	    	pits.get(i).setPreferredSize(new Dimension(100,70));
 			pits.get(i).setOpaque(true);
 			pits.get(i).setBorderPainted(false);
 	    	

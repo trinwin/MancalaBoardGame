@@ -29,12 +29,12 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 
 			@Override
 			public int getIconWidth() {
-				return 700;
+				return 650;
 			}
 
 			@Override
 			public int getIconHeight() {
-				return 730;
+				return 750;
 			}
 		};
 
@@ -48,18 +48,6 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 	 */
 	public void organizePitsJLabel(ArrayList<JButton> pits, JLabel label)
 	{
-		//Set up Mancala A and B
-		mancalaA.setPreferredSize(new Dimension(100, 60));
-		mancalaA.setBackground(new Color(207, 185, 154));
-		mancalaA.setOpaque(true);
-		mancalaA.setBorderPainted(false);
-
-		mancalaB.setPreferredSize(new Dimension(100, 60));
-		mancalaB.setBackground(new Color(207, 185, 154));
-		mancalaB.setOpaque(true);
-		mancalaB.setBorderPainted(false);
-
-
 		JButton mancalaBLabel = new JButton("B");
 		mancalaBLabel.setFont(new Font("Dotum", Font.PLAIN, 30));
 		mancalaBLabel.setBackground(new Color(102, 51, 0));
@@ -74,6 +62,16 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 		mancalaALabel.setOpaque(true);
 		mancalaALabel.setBorderPainted(false);
 
+		//Set up Mancala A and B
+		mancalaA.setPreferredSize(new Dimension(100, 70));
+		mancalaA.setBackground(new Color(207, 185, 154));
+		mancalaA.setOpaque(true);
+		mancalaA.setBorderPainted(false);
+
+		mancalaB.setPreferredSize(new Dimension(100, 70));
+		mancalaB.setBackground(new Color(207, 185, 154));
+		mancalaB.setOpaque(true);
+		mancalaB.setBorderPainted(false);
 
 		//Set board layout and add 2 Mancala
 		label.setLayout(new GridBagLayout());
@@ -138,17 +136,14 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 	public void addStones(ArrayList<JButton> pits, int [] mancalaData) {
 		for(int i = 0; i < mancalaData.length; i++) {
 			Stone stones  = new Stone(mancalaData[i]);
-			stones.setColorOfStone(Color.BLACK);
+			stones.setIconHeight(60);
+			stones.setIconWidth(100);
 			System.out.println(mancalaData[i]);
 
 			if(i == 6) { // Mancala A
-				stones.setIconHeight(100);
-				stones.setIconWidth(50);
 				mancalaA.setIcon(stones);
 
 			}else if(i == 13) { // Mancala B
-				stones.setIconHeight(100);
-				stones.setIconWidth(50);
 				mancalaB.setIcon(stones);
 			} else {
 				if(i > 6) {
