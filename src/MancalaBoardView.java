@@ -12,7 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 /**
  * The View and Controller. 
- * @author dianasok
+ * @author Angel Nguyen, Trinh Nguyen, Diana Sok
  *
  */
 public class MancalaBoardView extends JFrame implements ChangeListener { 
@@ -32,10 +32,10 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	private ArrayList<JButton> pits = new ArrayList<>(); 	// JButtons representing pits
 	
 	private boolean mancalaReached = false;
-	private boolean isTrivialUndo; 
 	private int undoCountDownA;
 	private int undoCountDownB;
 	private int turn; //0 - A; 1 - B
+	
 	
 	/**
 	 * Constructs a MancalaBoardView with specified model and
@@ -46,7 +46,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		
 		this.theModel = theModel;
 		boardLayoutStrategy = new HorizontalBoardLayout();
-		isTrivialUndo = true;
 		undoCountDownA = MAX_NUM_OF_UNDOS;
 		undoCountDownB = MAX_NUM_OF_UNDOS;
 		turn = TURN_OF_A;
@@ -61,7 +60,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		
 		this.theModel = null;
 		boardLayoutStrategy = new HorizontalBoardLayout();
-		isTrivialUndo = true;
 		undoCountDownA = MAX_NUM_OF_UNDOS;
 		undoCountDownB = MAX_NUM_OF_UNDOS;
 		turn = TURN_OF_A;
@@ -190,7 +188,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	    pits.add(b6);
 	    
 	    //north
-	    JTextField announcements = new JTextField("Play game!");
+	    JTextField announcements = new JTextField(40);
+	    announcements.setText("Play game!");
 	    
 	    for(int i = 0; i < pits.size(); i ++) {
 	    	
@@ -265,9 +264,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		JTextField undoCountText = new JTextField(20);
 		undoCountText.setText("Number of undos: 3");
 		
-		JTextField player = new JTextField(20);
-		player.setText("Player A's Turn");
-		
 		JButton undoButton = new JButton("undo");
 		undoButton.addActionListener(new ActionListener(){
 
@@ -275,8 +271,14 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 			public void actionPerformed(ActionEvent e) {
 				// stop trivial undo
 				if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
-					 //isTrivialUndo = true;
-					announcements.setText("Oops! No move to undo");
+					//isTrivialUndo = true;
+					//consecutively press undo --> 
+					if(turn == TURN_OF_A) {
+						turn = TURN_OF_B;
+					} else {
+						turn = TURN_OF_A;
+					}
+					undoCountText.setText("Oops! No move to undo");
 				}
 				else if(turn == TURN_OF_B && undoCountDownA <= 0) {
 					undoCountText.setText("Oops! Undo max has been reached.");
@@ -324,7 +326,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 			
 		});
 		
-		south.add(player);
 		south.add(undoCountText);
 		south.add(undoButton);
 		
