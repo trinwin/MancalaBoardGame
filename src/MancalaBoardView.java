@@ -30,11 +30,9 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 	private ArrayList<JButton> pits = new ArrayList<>(); 	// JButtons representing pits
 	
 	private boolean mancalaReached = false;
-	private boolean canSwitch = false;
 	private int undoCountDownA;
 	private int undoCountDownB;
 	private int turn; //0 - A; 1 - B
-	private int undoCount = 0;
 	
 	
 	/**
@@ -216,13 +214,11 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
     				else if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) { //
     					theModel.move(mouseID);
     					if(theModel.isLastStoneInMancala()) {
-    						//turn = TURN_OF_A;
-    						canSwitch = false; //false
+    						turn = TURN_OF_A;
     						announcements.setText("go again!");
     						mancalaReached = true;
     					} else {
     						turn = TURN_OF_B;
-    						canSwitch = true;
     					}
     					System.out.println("1 - here : ");
     					undoCountDownB = MAX_NUM_OF_UNDOS;
@@ -230,19 +226,17 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
     				else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
     					theModel.move(mouseID);
     					if(theModel.isLastStoneInMancala()) {
-    						//turn = TURN_OF_B;
-    						canSwitch = false;
+    						turn = TURN_OF_B;
     						announcements.setText("go again!");
     						mancalaReached = true;
     					} else {
     						turn = TURN_OF_A;
-    						canSwitch = true;
     					}
     					System.out.println("2 - here : ");
     					undoCountDownA = MAX_NUM_OF_UNDOS;
     				}
 
-    				undoCount = 0;
+    				//undoCount = 0;
     				System.out.println("10 - here : turn " + turn + ", undoA " + undoCountDownA);
     			}
     		});
@@ -277,21 +271,21 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 			public void actionPerformed(ActionEvent e) {
 				// stop trivial undo
 				
+				System.out.println("top undoCountB: " + undoCountDownB);
+				System.out.println("undoCountA: " + undoCountDownA);
+				System.out.println("---: " + turn);
 				if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
-					if(turn == TURN_OF_A && canSwitch == false && undoCount == 0) {
+					if(turn == TURN_OF_A) {
 						turn = TURN_OF_B;
-					} else if(turn == TURN_OF_B && canSwitch == false && undoCount == 0) { 
+					} else if (turn == TURN_OF_B) {
 						turn = TURN_OF_A;
 					}
-					canSwitch = true;
 					undoCountText.setText("Oops! No move to undo");
 				}
 				else if(turn == TURN_OF_B && undoCountDownA <= 0) {
-					canSwitch = true;
 					undoCountText.setText("Oops! Undo max has been reached.");
 				} 
 				else if(turn == TURN_OF_A && undoCountDownB <= 0) {
-					canSwitch = true;
 					undoCountText.setText("Oops! Undo max has been reached.");
 				}
 				else if(mancalaReached && turn == TURN_OF_B) {
@@ -302,7 +296,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					theModel.undo();
 					turn = TURN_OF_B;
 					mancalaReached = false;
-					canSwitch = false;
 				}
 				else if(mancalaReached && turn == TURN_OF_A) {
 					undoCountDownA--;
@@ -312,7 +305,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					theModel.undo();
 					turn = TURN_OF_A;
 					mancalaReached = false;
-					canSwitch = false; 
 				}
 				else if(turn == TURN_OF_A) {
 					undoCountDownB--;
@@ -321,7 +313,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					undoCountText.setText("Number of undos: " + undoCountDownB);
 					theModel.undo();
 					turn = TURN_OF_B;
-					canSwitch = false;
 					System.out.println("6 - here : ");
 				}
 				else if(turn == TURN_OF_B) {
@@ -331,10 +322,12 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					System.out.println("undoCountA: " + undoCountDownA);
 					theModel.undo();
 					turn = TURN_OF_A;
-					canSwitch = false;
 					System.out.println("7 - here : ");
 				}
-				undoCount ++;
+					System.out.println("bottom undoCountB: " + undoCountDownB);
+					System.out.println("undoCountA: " + undoCountDownA);
+					System.out.println("---: " + turn);
+				
 			}
 			
 		});
