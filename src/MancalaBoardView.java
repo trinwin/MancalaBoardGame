@@ -29,6 +29,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	private BoardLayoutStrategy boardLayoutStrategy;		// general strategy 
 	private ArrayList<JButton> pits = new ArrayList<>(); 	// JButtons representing pits
 	
+	private boolean mancalaReached = false;
 	private boolean isTrivialUndo; 
 	private int undoCountDownA;
 	private int undoCountDownB;
@@ -204,27 +205,30 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
     				
     				if(undoCountDownA < 0 && turn == TURN_OF_B && mouseID <= LAST_PIT_OF_A) { 
     					announcements.setText("It's not your turn A! It's B's turn.");
+    					System.out.println("undoCountDownA " + undoCountDownA);
     				}
     				else if(undoCountDownB < 0 && turn == TURN_OF_A && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
     					announcements.setText("It's not your turn B! It's A's turn.");
+    					System.out.println("undoCountDownB " + undoCountDownB);
     				}
     				else if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) { //
     					theModel.move(mouseID);
     					if(theModel.isLastStoneInMancala()) {
     						turn = TURN_OF_A;
     						announcements.setText("go again!");
-    						
+    						mancalaReached = true;
     					} else {
     						turn = TURN_OF_B;
     					}
     					System.out.println("1 - here : ");
-    					undoCountDownB = MAX_NUM_OF_UNDOS; 
+    					undoCountDownB = MAX_NUM_OF_UNDOS;
     				}
     				else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
     					theModel.move(mouseID);
     					if(theModel.isLastStoneInMancala()) {
     						turn = TURN_OF_B;
     						announcements.setText("go again!");
+    						mancalaReached = true;
     					} else {
     						turn = TURN_OF_A;
     					}
@@ -273,8 +277,28 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 				else if(turn == TURN_OF_A && undoCountDownB <= 0) {
 					undoCountText.setText("Oops! Undo max has been reached.");
 				}
+				else if(mancalaReached && turn == TURN_OF_B) {
+					undoCountDownB--;
+					System.out.println("undoCountB: " + undoCountDownB);
+					System.out.println("undoCountA: " + undoCountDownA);
+					undoCountText.setText("Number of undos: " + undoCountDownB);
+					theModel.undo();
+					turn = TURN_OF_B;
+					mancalaReached = false;
+				}
+				else if(mancalaReached && turn == TURN_OF_A) {
+					undoCountDownA--;
+					System.out.println("undoCountB: " + undoCountDownB);
+					System.out.println("undoCountA: " + undoCountDownA);
+					undoCountText.setText("Number of undos: " + undoCountDownA);
+					theModel.undo();
+					turn = TURN_OF_A;
+					mancalaReached = false;
+				}
 				else if(turn == TURN_OF_A) {
 					undoCountDownB--;
+					System.out.println("undoCountB: " + undoCountDownB);
+					System.out.println("undoCountA: " + undoCountDownA);
 					undoCountText.setText("Number of undos: " + undoCountDownB);
 					theModel.undo();
 					turn = TURN_OF_B;
@@ -283,6 +307,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 				else if(turn == TURN_OF_B) {
 					undoCountDownA--;
 					undoCountText.setText("Number of undos: " + undoCountDownA);
+					System.out.println("undoCountB: " + undoCountDownB);
+					System.out.println("undoCountA: " + undoCountDownA);
 					theModel.undo();
 					turn = TURN_OF_A;
 					System.out.println("7 - here : ");
