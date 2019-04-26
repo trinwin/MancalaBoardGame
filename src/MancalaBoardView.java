@@ -13,7 +13,7 @@ import javax.swing.event.ChangeListener;
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
  *
  */
-public class MancalaBoardView extends JFrame implements ChangeListener { /////
+public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 	
 	private static final int LAST_PIT_OF_B = 11;
 	private static final int FIRST_PIT_OF_B = 6;
