@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -271,7 +273,12 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(turn == TURN_OF_B && undoCountDownA <= 0) {
+				// stop trivial undo
+				if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
+					 //isTrivialUndo = true;
+					announcements.setText("Oops! No move to undo");
+				}
+				else if(turn == TURN_OF_B && undoCountDownA <= 0) {
 					undoCountText.setText("Oops! Undo max has been reached.");
 				} 
 				else if(turn == TURN_OF_A && undoCountDownB <= 0) {
