@@ -203,11 +203,13 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
     				int mouseID = this.getMouseListenerID();
     				System.out.println(mouseID);
     				
-    				if(undoCountDownA < 0 && turn == TURN_OF_B && mouseID <= LAST_PIT_OF_A) { 
+    				//prevents player A from going on player B's turn
+    				if(/*undoCountDownA < 0 &&*/ turn == TURN_OF_B && mouseID <= LAST_PIT_OF_A) { 
     					announcements.setText("It's not your turn A! It's B's turn.");
     					System.out.println("undoCountDownA " + undoCountDownA);
     				}
-    				else if(undoCountDownB < 0 && turn == TURN_OF_A && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
+    				//prevents player B from going on player A's turn
+    				else if(/*undoCountDownB < 0 && */turn == TURN_OF_A && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
     					announcements.setText("It's not your turn B! It's A's turn.");
     					System.out.println("undoCountDownB " + undoCountDownB);
     				}
@@ -219,6 +221,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
     						mancalaReached = true;
     					} else {
     						turn = TURN_OF_B;
+    						mancalaReached = false;
     					}
     					System.out.println("1 - here : ");
     					undoCountDownB = MAX_NUM_OF_UNDOS;
@@ -231,6 +234,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
     						mancalaReached = true;
     					} else {
     						turn = TURN_OF_A;
+    						mancalaReached = false;
     					}
     					System.out.println("2 - here : ");
     					undoCountDownA = MAX_NUM_OF_UNDOS;
@@ -269,17 +273,34 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				// stop trivial undo
 				
 				System.out.println("top undoCountB: " + undoCountDownB);
 				System.out.println("undoCountA: " + undoCountDownA);
 				System.out.println("---: " + turn);
 				if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
-					if(turn == TURN_OF_A) {
-						turn = TURN_OF_B;
-					} else if (turn == TURN_OF_B) {
-						turn = TURN_OF_A;
-					}
+//					if (turn == TURN_OF_A && undoCountDownB == MAX_NUM_OF_UNDOS) {
+//						turn = TURN_OF_B;
+//						System.out.println("mac");
+//					}
+//					else if (turn == TURN_OF_B && undoCountDownA == MAX_NUM_OF_UNDOS) {
+//						turn = TURN_OF_A;
+//						System.out.println("and");
+//					}
+//					else if(undoCountDownA < MAX_NUM_OF_UNDOS) {
+//						turn = TURN_OF_A;
+//						System.out.println("cheese");
+//					}
+//					else if(undoCountDownB < MAX_NUM_OF_UNDOS) {
+//						turn = TURN_OF_B;
+//						System.out.println("beans");
+//					}
+//					if(turn == TURN_OF_A) {
+//						turn = TURN_OF_B;
+//					} else if (turn == TURN_OF_B) {
+//						turn = TURN_OF_A;
+////					}
 					undoCountText.setText("Oops! No move to undo");
 				}
 				else if(turn == TURN_OF_B && undoCountDownA <= 0) {
@@ -294,7 +315,9 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					System.out.println("undoCountA: " + undoCountDownA);
 					undoCountText.setText("Number of undos: " + undoCountDownB);
 					theModel.undo();
-					turn = TURN_OF_B;
+					if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
+						turn = TURN_OF_A;
+					}
 					mancalaReached = false;
 				}
 				else if(mancalaReached && turn == TURN_OF_A) {
@@ -303,16 +326,31 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					System.out.println("undoCountA: " + undoCountDownA);
 					undoCountText.setText("Number of undos: " + undoCountDownA);
 					theModel.undo();
-					turn = TURN_OF_A;
+					if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
+						turn = TURN_OF_B;
+					}
 					mancalaReached = false;
 				}
-				else if(turn == TURN_OF_A) {
+//				else if(turn == TURN_OF_A && undoCountDownA < MAX_NUM_OF_UNDOS) {
+//					undoCountDownA--;
+//					undoCountText.setText("Number of undos: " + undoCountDownA);
+//					theModel.undo();
+//					turn = TURN_OF_A;
+//					System.out.println("hello");
+//				}
+//				else if(turn == TURN_OF_B && undoCountDownB < MAX_NUM_OF_UNDOS) {
+//					undoCountDownB--;
+//					undoCountText.setText("Number of undos: " + undoCountDownA);
+//					theModel.undo();
+//					turn = TURN_OF_B;
+//				}
+				else if(turn == TURN_OF_A) { 
 					undoCountDownB--;
 					System.out.println("undoCountB: " + undoCountDownB);
 					System.out.println("undoCountA: " + undoCountDownA);
 					undoCountText.setText("Number of undos: " + undoCountDownB);
 					theModel.undo();
-					turn = TURN_OF_B;
+					turn = TURN_OF_B; 
 					System.out.println("6 - here : ");
 				}
 				else if(turn == TURN_OF_B) {
