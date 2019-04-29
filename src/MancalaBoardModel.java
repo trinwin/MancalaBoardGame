@@ -6,7 +6,7 @@ public class MancalaBoardModel {
 	
 	private static final int NUMBER_OF_PITS = 14;
 
-	//Position of Mancala A and B in the ArrayList
+	//Position of Mancala A and B in the Array
 	private static final int A_MANCALA = 6;
 	private static final int B_MANCALA = 13;
 	
@@ -25,8 +25,12 @@ public class MancalaBoardModel {
 		
 		//index 0 - 6 belong to player A, index 7 - 13 belong to player B
 		//index 0 and 7 correspond to Mancalas
-		currBoard = new int[] { 0, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit,
-							    0, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit };
+
+        // A1 - A2 - A3 - A4 - A5 - A6 - Mancala A
+        // B1 - B2 - B3 - B4 - B5 - B6 - Mancala B
+
+		currBoard = new int[] { stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, 0,
+							    stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, stonesPerPit, 0 };
 			
 		prevBoard = currBoard.clone();
 		lastStoneInMancala = false;
@@ -46,9 +50,9 @@ public class MancalaBoardModel {
 	
 	public void fillInitialBoard(int stonesPerPit) {
 		
-		for(int i = 0; i < currBoard.length; i++) {
+		for (int i = 0; i < currBoard.length; i++) {
 			
-			if(i == A_MANCALA || i == B_MANCALA) {
+			if (i == A_MANCALA || i == B_MANCALA) {
 				
 				currBoard[i] = 0;
 			} else {
@@ -98,21 +102,78 @@ public class MancalaBoardModel {
 	
 	/**
 	 * Checks if the game is over when pits belonging to either player are all empty.
-	 * @return true if the pits belonging to any player are all empty
+	 * @return  0 if game is not over
+     *          1 if game is over and all A and B pits are empty
+     *          2 if game is over and only A pits are empty
+     *          3 if game is over and only B pits are empty
+     *
 	 * HERE
 	 */
-	public boolean isGameOver() {
-		
-		// to be implemented
+	public int isGameOver() {
+
+	    // Cases:
+        // all A pits empty - B pits still have stones --> move stones to B mancala
+        // all B pits empty - A pits still have stones --> move stones to A mancala
+        // both A and B pits are empty - game over
+
+        boolean empty_A = false, empty_B = false;
+
+        for (int pitA = 0; pitA <= 6; pitA++){
+            if (currBoard[pitA] != 0){
+                empty_A = false;
+                break;
+            } else empty_A = true;
+        }
+
+        for (int pitB = 7; pitB <= 12; pitB++){
+            if (currBoard[pitB] != 0){
+                empty_B = false;
+                break;
+
+            } else empty_B = true;
+        }
+
+//        if (!empty_A && !empty_B) return 0;
+        if (empty_A && empty_B) return 1;
+        else {
+            if (empty_A) return 2;
+            else if (empty_B) return 3;
+        }
+        return 0;
+
+
+	    // to be implemented
 		//just check if row of pits belonging to either player is all 0
 		//remember to not include value in Mancala while checking!
 		//Winner
 		
-		return false;
+//		return 0;
 	}
-	public int winner(){
-		return 0;
+	public int winner(int emptyPitFlag){
+
+        // if all pits in A and B are empty
+        if (emptyPitFlag == 1){
+            if (currBoard[A_MANCALA] > currBoard[B_MANCALA])
+                return 1;
+            else if (currBoard[A_MANCALA] < currBoard[B_MANCALA])
+                return 2;
+            else return 3;
+
+        } else if (emptyPitFlag == 2){ //only all A pits are empty
+            moveStonesToMancala(7, B_MANCALA); //move stone to Mancala B
+
+        } else if (emptyPitFlag == 3){ //only all B pits are empty
+            moveStonesToMancala(0, A_MANCALA); //move stone to Mancala A
+
+        }
+	    return 0;
 	}
+
+	public void moveStonesToMancala(int pitPos, int mancalaPos){
+        for (int i = pitPos; i <= 6; i++){
+            currBoard[mancalaPos] += currBoard[i];
+        }
+    }
 	
 	/**
 	 * Updates board according to the number of stones in pit chosen 
@@ -205,6 +266,12 @@ public class MancalaBoardModel {
 			for (ChangeListener l : listeners) {
 				l.stateChanged(new ChangeEvent(this));
 			}
+
+//			//if game over -- break
+//            int gameOver = isGameOver();
+//			if (gameOver > 0){
+////			    break;
+//            }
 		}	
 	}
 	

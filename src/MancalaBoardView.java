@@ -279,6 +279,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 				System.out.println("top undoCountB: " + undoCountDownB);
 				System.out.println("undoCountA: " + undoCountDownA);
 				System.out.println("---: " + turn);
+
 				if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
 //					if (turn == TURN_OF_A && undoCountDownB == MAX_NUM_OF_UNDOS) {
 //						turn = TURN_OF_B;
@@ -303,13 +304,14 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 ////					}
 					undoCountText.setText("Oops! No move to undo");
 				}
-				else if(turn == TURN_OF_B && undoCountDownA <= 0) {
+
+				else if (turn == TURN_OF_B && undoCountDownA <= 0) {
 					undoCountText.setText("Oops! Undo max has been reached.");
 				} 
-				else if(turn == TURN_OF_A && undoCountDownB <= 0) {
+				else if (turn == TURN_OF_A && undoCountDownB <= 0) {
 					undoCountText.setText("Oops! Undo max has been reached.");
 				}
-				else if(mancalaReached && turn == TURN_OF_B) {
+				else if (mancalaReached && turn == TURN_OF_B) {
 					undoCountDownB--;
 					System.out.println("undoCountB: " + undoCountDownB);
 					System.out.println("undoCountA: " + undoCountDownA);
@@ -320,7 +322,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					}
 					mancalaReached = false;
 				}
-				else if(mancalaReached && turn == TURN_OF_A) {
+				else if (mancalaReached && turn == TURN_OF_A) {
 					undoCountDownA--;
 					System.out.println("undoCountB: " + undoCountDownB);
 					System.out.println("undoCountA: " + undoCountDownA);
@@ -344,7 +346,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 //					theModel.undo();
 //					turn = TURN_OF_B;
 //				}
-				else if(turn == TURN_OF_A) { 
+				else if (turn == TURN_OF_A) {
 					undoCountDownB--;
 					System.out.println("undoCountB: " + undoCountDownB);
 					System.out.println("undoCountA: " + undoCountDownA);
@@ -353,7 +355,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					turn = TURN_OF_B; 
 					System.out.println("6 - here : ");
 				}
-				else if(turn == TURN_OF_B) {
+				else if (turn == TURN_OF_B) {
 					undoCountDownA--;
 					undoCountText.setText("Number of undos: " + undoCountDownA);
 					System.out.println("undoCountB: " + undoCountDownB);
@@ -362,14 +364,20 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					turn = TURN_OF_A;
 					System.out.println("7 - here : ");
 				}
-					System.out.println("bottom undoCountB: " + undoCountDownB);
-					System.out.println("undoCountA: " + undoCountDownA);
-					System.out.println("---: " + turn);
-				
+
+				System.out.println("bottom undoCountB: " + undoCountDownB);
+				System.out.println("undoCountA: " + undoCountDownA);
+				System.out.println("---: " + turn);
+
+				//check for game over
+				//move all leftover stones to mancala --> repaint the board
+				//find the winner and display
+
 			}
 			
 		});
-		
+
+
 		south.add(undoCountText);
 		south.add(undoButton);
 		
