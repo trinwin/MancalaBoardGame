@@ -24,7 +24,7 @@ public class MancalaBoardModel {
 	public MancalaBoardModel(int stonesPerPit) {
 		
 		//index 0 - 6 belong to player A, index 7 - 13 belong to player B
-		//index 0 and 7 correspond to Mancalas
+		//index 6 and 13 correspond to Mancalas
 
         // A1 - A2 - A3 - A4 - A5 - A6 - Mancala A
         // B1 - B2 - B3 - B4 - B5 - B6 - Mancala B
@@ -118,22 +118,21 @@ public class MancalaBoardModel {
 
         boolean empty_A = false, empty_B = false;
 
-        for (int pitA = 0; pitA <= 6; pitA++){
+        for (int pitA = 0; pitA < A_MANCALA; pitA++){
             if (currBoard[pitA] != 0){
                 empty_A = false;
                 break;
             } else empty_A = true;
         }
 
-        for (int pitB = 7; pitB <= 12; pitB++){
+        for (int pitB = 7; pitB < B_MANCALA; pitB++){
             if (currBoard[pitB] != 0){
                 empty_B = false;
                 break;
 
             } else empty_B = true;
         }
-
-//        if (!empty_A && !empty_B) return 0;
+        System.out.println(empty_A + "--" + empty_B);
         if (empty_A && empty_B) return 1;
         else {
             if (empty_A) return 2;
@@ -142,36 +141,45 @@ public class MancalaBoardModel {
         return 0;
 
 
-	    // to be implemented
-		//just check if row of pits belonging to either player is all 0
-		//remember to not include value in Mancala while checking!
-		//Winner
-		
-//		return 0;
 	}
+
+    /**
+     *
+     * @param emptyPitFlag
+     * @return 1 if winner is A or
+     *         2 if the winner is B or
+     *         3 if there is a tie
+     */
 	public int winner(int emptyPitFlag){
 
-        // if all pits in A and B are empty
-        if (emptyPitFlag == 1){
-            if (currBoard[A_MANCALA] > currBoard[B_MANCALA])
-                return 1;
-            else if (currBoard[A_MANCALA] < currBoard[B_MANCALA])
-                return 2;
-            else return 3;
-
-        } else if (emptyPitFlag == 2){ //only all A pits are empty
-            moveStonesToMancala(7, B_MANCALA); //move stone to Mancala B
+	    if (emptyPitFlag == 2){ //only all A pits are empty
+            moveStonesToMancala(7, B_MANCALA); //move leftover stones to Mancala B
 
         } else if (emptyPitFlag == 3){ //only all B pits are empty
-            moveStonesToMancala(0, A_MANCALA); //move stone to Mancala A
+            moveStonesToMancala(0, A_MANCALA); //move leftover stones to Mancala A
 
         }
-	    return 0;
+
+	    //Compare number of stones in two mancalas
+        if (currBoard[A_MANCALA] > currBoard[B_MANCALA])
+            return 1;
+        else if (currBoard[A_MANCALA] < currBoard[B_MANCALA])
+            return 2;
+        else return 3;
 	}
 
+    /**
+     *
+     * @param pitPos
+     * @param mancalaPos
+     */
 	public void moveStonesToMancala(int pitPos, int mancalaPos){
-        for (int i = pitPos; i <= 6; i++){
+        for (int i = pitPos; i < mancalaPos; i++){
             currBoard[mancalaPos] += currBoard[i];
+            currBoard[i] = 0;
+        }
+        for (ChangeListener l : listeners) {
+            l.stateChanged(new ChangeEvent(this));
         }
     }
 	
