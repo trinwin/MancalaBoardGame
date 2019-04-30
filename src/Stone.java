@@ -35,17 +35,12 @@ public class Stone implements Icon {
 		Graphics2D g2 = (Graphics2D) g;
 
 		for(int i = 1; i <= stoneCount; i++) {
-
-			if (i == 1){
-				x = DIAMETER;
-
-			} else if ((i-1) % MAX_NUM_STONES_PER_ROW == 0 ) {
+			if (i == 1) x = DIAMETER;
+			else if ((i-1) % MAX_NUM_STONES_PER_ROW == 0 ) {
 				x = DIAMETER;
 				y += (DIAMETER + 1);
 
-			} else {
-				x += (DIAMETER + 1);
-			}
+			} else x += (DIAMETER + 1);
 
 			Ellipse2D.Double stone = new Ellipse2D.Double(x, y, DIAMETER, DIAMETER);
 			g2.setColor(colorOfStone);

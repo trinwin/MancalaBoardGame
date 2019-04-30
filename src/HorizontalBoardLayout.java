@@ -1,23 +1,24 @@
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * A concrete strategy used to display mancala board horizontally
+ * A concrete strategy used to display Mancala board horizontally
  * when plugged into the context (MancalaBoardView)
- *
  */
 public class HorizontalBoardLayout implements BoardLayoutStrategy{
 
 	JButton mancalaB = new JButton();	// JButton representing Mancala B
 	JButton mancalaA = new JButton();	// JButton representing Mancala A
 
-
+	/**
+	 * Create and return a horizontal board as an Icon
+	 * @return vertical board as an Icon
+	 */
 	public Icon getBoard() {
 
 		Icon board = new Icon() {
@@ -46,9 +47,14 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 		return board;
 	}
 
+	/**
+	 * Set up a Horizontal Mancala Board with pits and two mancalas
+	 * @param pits - list of all JButtons of pits
+	 * @param label - main Mancala Board
+	 */
 	public void organizePitsJLabel(ArrayList<JButton> pits, JLabel label)
 	{
-
+		//Set Mancala A and Mancala B label
 		JButton mancalaBLabel = new JButton("B");
 		mancalaBLabel.setFont(new Font("Arial", Font.PLAIN, 30));
 		mancalaBLabel.setBackground(new Color(102, 51, 0));
@@ -63,32 +69,28 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 		mancalaALabel.setOpaque(true);
 		mancalaALabel.setBorderPainted(false);
 
-		// Set Mancala A JButton color
+		//Set Mancala A and Mancala B JButton
 		mancalaA.setBackground(new Color(207, 185, 154));
 		mancalaA.setPreferredSize(new Dimension(100,70));
 		mancalaA.setOpaque(true);
 		mancalaA.setBorderPainted(false);
 
-		// Set Mancala B JButton color
 		mancalaB.setBackground(new Color(207, 185, 154));
 		mancalaB.setPreferredSize(new Dimension(100,70));
 		mancalaB.setOpaque(true);
 		mancalaB.setBorderPainted(false);
 
 		label.setLayout(new FlowLayout());
-		
 		label.add(mancalaBLabel);
 		label.add(mancalaB);
 
 		// JPanel to add pit JButtons onto
 		JPanel centerPits = new JPanel();
-
 		centerPits.setOpaque(false);
 		centerPits.setLayout(new GridLayout(4, 6, 10, 10));
 
 		// Add pit labels for B to JPanel 
 		for(int i = 6; i > 0; i --) {
-			
 			JButton pitLabel = new JButton("B" + i);
 			pitLabel.setFont(new Font("Arial", Font.PLAIN, 30));
 			pitLabel.setBackground(new Color(102, 51, 0));
@@ -124,6 +126,11 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 		label.add(mancalaALabel);
 	}
 
+	/**
+	 * Create Stone objects associated with each pits and mancala
+	 * @param pits - list of all JButtons of pits
+	 * @param mancalaData - number of stones in each pit
+	 */
 	@Override
 	public void addStones(ArrayList<JButton> pits, int [] mancalaData) {
 		// TODO, consider:
@@ -131,12 +138,11 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 			Stone stones = new Stone(mancalaData[i]);
 			stones.setIconHeight(60);
 			stones.setIconWidth(100);
+
 			if(i == 6) { //Mancala A
 				mancalaA.setIcon(stones);
-
 			} else if(i == 13) { // Mancala B
 				mancalaB.setIcon(stones);
-
 			} else {
 				if(i > 6) {
 					pits.get(i - 1).setIcon(stones);

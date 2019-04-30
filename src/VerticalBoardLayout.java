@@ -6,14 +6,18 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * A concrete strategy used to display Mancala board vertically
+ * when plugged into the context (MancalaBoardView)
+ */
 public class VerticalBoardLayout implements BoardLayoutStrategy
 {
 	JButton mancalaA = new JButton();
 	JButton mancalaB = new JButton();
 
 	/**
-	 *
-	 * @return
+	 * Create and return a vertical board as an Icon
+	 * @return vertical board as an Icon
 	 */
 	public Icon getBoard() {
 		Icon board = new Icon() {
@@ -42,12 +46,13 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 	}
 
 	/**
-	 * Create a Vertical Mancala Board
+	 * Set up a Horizontal Mancala Board with pits and two mancalas
 	 * @param pits - list of all JButtons of pits
 	 * @param label - main Mancala Board
 	 */
 	public void organizePitsJLabel(ArrayList<JButton> pits, JLabel label)
 	{
+		//Set Mancala A and Mancala B label
 		JButton mancalaBLabel = new JButton("B");
 		mancalaBLabel.setFont(new Font("Dotum", Font.PLAIN, 30));
 		mancalaBLabel.setBackground(new Color(102, 51, 0));
@@ -62,7 +67,7 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 		mancalaALabel.setOpaque(true);
 		mancalaALabel.setBorderPainted(false);
 
-		//Set up Mancala A and B
+		//Set Mancala A and Mancala B JButton
 		mancalaA.setPreferredSize(new Dimension(100, 70));
 		mancalaA.setBackground(new Color(207, 185, 154));
 		mancalaA.setOpaque(true);
@@ -83,7 +88,6 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 
         label.add(mancalaBLabel, gbc);
         label.add(mancalaB, gbc);
-
 
 		//Create A and B pits
 		JPanel centerPits = new JPanel();
@@ -142,7 +146,6 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 
 			if(i == 6) { // Mancala A
 				mancalaA.setIcon(stones);
-
 			}else if(i == 13) { // Mancala B
 				mancalaB.setIcon(stones);
 			} else {

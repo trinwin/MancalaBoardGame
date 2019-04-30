@@ -40,7 +40,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	 * @param theModel the model
 	 */
 	public MancalaBoardView(MancalaBoardModel theModel) {
-
 		this.theModel = theModel;
 		boardLayoutStrategy = new HorizontalBoardLayout();
 		undoCountDownA = MAX_NUM_OF_UNDOS;
@@ -54,7 +53,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 	 * default HorizontalBoardLayout strategy
 	 */
 	public MancalaBoardView() {
-
 		this.theModel = null;
 		boardLayoutStrategy = new HorizontalBoardLayout();
 		undoCountDownA = MAX_NUM_OF_UNDOS;
@@ -138,10 +136,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		preferenceMenu.add(promptForStyle);
 		preferenceMenu.add(styleCombo);
 		preferenceMenu.add(selectStyle);
-
 		preferenceMenu.pack();
 		preferenceMenu.setVisible(true);
-
 	}
 
 	/**
@@ -240,21 +236,19 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 					}
 
 
-					//check for game over
+					//Check if the game is over
 					int gameOverFlag = theModel.isGameOver();
 
 					if (gameOverFlag > 1) {
 						int winner = theModel.winner(gameOverFlag);
-						if (winner == 1){
-							announcements.setText("Congratulation! A is the winner");
-						} else if (winner == 2){
-							announcements.setText("Congratulation! B is the winner");
-						}
+
+						if (winner == 1) 		announcements.setText("Congratulation! A is the winner");
+						else if (winner == 2)   announcements.setText("Congratulation! B is the winner");
+						else if (winner == 2)   announcements.setText("There is a tie");
 					}
 				}
 			});
 		}
-
 
 		int [] mancalaData = theModel.getCurrBoard();
 
@@ -321,22 +315,18 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 					theModel.undo();
 					turn = TURN_OF_A;
 				}
-
 			}
-
 		});
 
 
 		south.add(undoCountText);
 		south.add(undoButton);
-
 		add(south, BorderLayout.SOUTH);
 
 		//setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
-
 	}
 
 	public static void main(String[] args) {
@@ -347,7 +337,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 
 	/**
 	 * Called when the data in the model is changed.
-	 *
 	 * @param e the event representing the change
 	 */
 	public void stateChanged(ChangeEvent e) {

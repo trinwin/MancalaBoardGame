@@ -100,9 +100,8 @@ public class MancalaBoardModel {
 	/**
 	 * Checks if the game is over when pits belonging to either player are all empty.
 	 * @return  0 if game is not over
-     *          1 if game is over and all A and B pits are empty
-     *          2 if game is over and only A pits are empty
-     *          3 if game is over and only B pits are empty
+     *          1 if game is over and only A pits are empty
+     *          2 if game is over and only B pits are empty
 	 */
 	public int isGameOver() {
 
@@ -136,18 +135,19 @@ public class MancalaBoardModel {
 	}
 
     /**
-     *
-     * @param emptyPitFlag
-     * @return 1 if winner is A or
-     *         2 if the winner is B or
+     * Find the winner by moving all leftover stones to an appropriate mancala
+	 * and compare the number of stone of Mancala A and b
+     * @param emptyPitFlag - indicate either pits of A or B or both are empty
+     * @return 1 if winner is A
+     *         2 if the winner is B
      *         3 if there is a tie
      */
 	public int winner(int emptyPitFlag){
 
-	    if (emptyPitFlag == 2){ //only all A pits are empty
+	    if (emptyPitFlag == 1){ //only all A pits are empty
             moveStonesToMancala(7, B_MANCALA); //move leftover stones to Mancala B
 
-        } else if (emptyPitFlag == 3){ //only all B pits are empty
+        } else if (emptyPitFlag == 2){ //only all B pits are empty
             moveStonesToMancala(0, A_MANCALA); //move leftover stones to Mancala A
 
         }
@@ -161,9 +161,9 @@ public class MancalaBoardModel {
 	}
 
     /**
-     *
-     * @param pitPos
-     * @param mancalaPos pos
+     * Move all stones of pits to an appropriate Mancala at the end of the game
+     * @param pitPos starting position of pit
+     * @param mancalaPos position of the mancala
      */
 	public void moveStonesToMancala(int pitPos, int mancalaPos){
         for (int i = pitPos; i < mancalaPos; i++){
@@ -266,13 +266,7 @@ public class MancalaBoardModel {
 			for (ChangeListener l : listeners) {
 				l.stateChanged(new ChangeEvent(this));
 			}
-
-//			//if game over -- break
-//            int gameOver = isGameOver();
-//			if (gameOver > 0){
-////			    break;
-//            }
-		}	
+		}
 	}
 	
 	/**
