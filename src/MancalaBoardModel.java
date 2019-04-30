@@ -2,6 +2,17 @@ import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * This class serves as the model of the MVC for the Mancala game.  This model houses the the data for the number of stones currently 
+ * in a particular pit, which is held in 2 arrays.  One array houses the current state of the board while the other houses the previous 
+ * state of the board to allow a user a limited number of undos per turn.  An ArrayList is used to hold ChangeListeners that perform an 
+ * action once the model notifies them of changes.  MancalaBoardModel also contains accessors and mutators to the data and states of the game.
+ * 
+ * 
+ * @author Angel Nguyen, Trinh Nguyen, Diana Sok
+ * @version 1.0
+ *
+ */
 public class MancalaBoardModel {
 	
 	private static final int NUMBER_OF_PITS = 14;
@@ -15,7 +26,6 @@ public class MancalaBoardModel {
 	private ArrayList<ChangeListener> listeners; //will only contain View Listener
 	private boolean lastStoneInMancala;
 	private int undos;
-	private int turn; //0 = A's turn, 1 = B's turn;
 	
 	/**
 	 * Constructs a MancalaBoardModel with specified number of stones in each pit, and 0 stones in Mancalas
@@ -26,6 +36,7 @@ public class MancalaBoardModel {
 		//index 0 - 6 belong to player A, index 7 - 13 belong to player B
 		//index 6 and 13 correspond to Mancalas
 
+		//Layout of the currBoard array corresponding to the board labels
         // A1 - A2 - A3 - A4 - A5 - A6 - Mancala A
         // B1 - B2 - B3 - B4 - B5 - B6 - Mancala B
 
@@ -38,6 +49,9 @@ public class MancalaBoardModel {
 		undos = 0;
 	}
 	
+	/**
+	 * Constructs an empty MancalaBoardModel.
+	 */
 	public MancalaBoardModel() {
 		
 		currBoard = new int[NUMBER_OF_PITS];
@@ -48,6 +62,10 @@ public class MancalaBoardModel {
 		
 	}
 	
+	/**
+	 * Sets the number of stones in each pit in the mancala board, excluding the mancalas.
+	 * @param stonesPerPit the number of stones in each pit
+	 */
 	public void fillInitialBoard(int stonesPerPit) {
 		
 		for (int i = 0; i < currBoard.length; i++) {
@@ -89,8 +107,8 @@ public class MancalaBoardModel {
 	}
 	
 	/**
-	 * Checks if last stone was dropped in a Mancala
-	 * @return the value oflastStoneInMancala
+	 * Checks if the last stone was dropped in a Mancala.
+	 * @return the boolean value of lastStoneInMancala; true allows player another turn
 	 */
 	public boolean isLastStoneInMancala() //we will use this in Control to prompt player to go again
 	{
@@ -124,7 +142,7 @@ public class MancalaBoardModel {
             } else B_empty = true;
         }
 
-        System.out.println(A_empty + "--" + B_empty);
+        //System.out.println(A_empty + "--" + B_empty);
 
         if (A_empty && B_empty) return 1;
         else {
@@ -133,13 +151,14 @@ public class MancalaBoardModel {
         }
         return 0;
 	}
-
+	
     /**
-     * Find the winner by moving all leftover stones to an appropriate mancala
-	 * and compare the number of stone of Mancala A and b
-     * @param emptyPitFlag - indicate either pits of A or B or both are empty
-     * @return 1 if winner is A
-     *         2 if the winner is B
+     * Determines the winner of the game by comparing the number of stones accumulated in each players mancala after 
+     * all remaining stones in the board are properly distributed.
+     * Winner has the greater number of stones.
+     * @param emptyPitFlag value passed in that dictates the player that receives the remaining stones on the board
+     * @return 1 if winner is A or
+     *         2 if the winner is B or
      *         3 if there is a tie
      */
 	public int winner(int emptyPitFlag){
@@ -160,10 +179,11 @@ public class MancalaBoardModel {
         else return 3;
 	}
 
-    /**
-     * Move all stones of pits to an appropriate Mancala at the end of the game
-     * @param pitPos starting position of pit
-     * @param mancalaPos position of the mancala
+	/**
+     * Sums up the remaining stones on the board and adds that to the mancala specified by the mancalaPos, 
+     * then notifies the listeners of the change in the model's state.
+     * @param pitPos the starting position of the summation.
+     * @param mancalaPos the position of the mancala that will receive the rest of the stones.
      */
 	public void moveStonesToMancala(int pitPos, int mancalaPos){
         for (int i = pitPos; i < mancalaPos; i++){
@@ -176,8 +196,13 @@ public class MancalaBoardModel {
     }
 	
 	/**
-	 * Updates board according to the number of stones in pit chosen 
-	 * @param pitNumber the pit number 
+	 * Given the pit number and the number of stones currently in the pit, the function redistributes the stones across
+	 * the board according to the rules of the mancala game. 
+	 * First exception is when a player has their last stone dropped in their own Mancala, resulting in a free turn.
+	 * Second exception is when a player's last stone dropped is in an empty pit on their side of the board.  
+	 * This results in the player getting to add the stones in the last pit and the stones in the pit across from that on 
+	 * the opponent's side into their own Mancala.
+	 * @param pitNumber the pit number chosen by the user
 	 */
 	public void move(int pitNumber) { //pit that is pressed by user 
 		
@@ -200,8 +225,8 @@ public class MancalaBoardModel {
 			if(ownPitNumber + stoneCount >= 13) {
 				opponMancReached = true;
 			}
-			//remember: if the player's last stone lands in her Mancala, she gets another turn
-			//in this case, just set lastStoneInMancala to True
+			
+			//If a player's last stone lands in their own Mancala, that player gets another turn, so set lastStoneInMancala = true
 			if(ownPitNumber + stoneCount == 6) {
 				lastStoneInMancala = true;
 				System.out.println("You get another turn!");
@@ -217,14 +242,15 @@ public class MancalaBoardModel {
 			//set the number of stones in specified pit number to 0
 			currBoard[oPitNumber] = 0;
 		
-			//ending pit is empty: add stones in pit and opponent's stone into own mancala
+			/*A's last stone dropped lands in an empty pit on A's side, so A gets to add the stones in that last pit and the stones 
+			on the opponent's side that is across from that last pit, into A's Mancala.*/
 			if(turnA && endingPit <= 5 && prevBoard[endingPit] == 0 && !opponMancReached) {
 				currBoard[endingPit] = 0;
 				int opponStones = currBoard[endingPit + (2*(6-endingPit))];
 				currBoard[A_MANCALA] = currBoard[A_MANCALA] + opponStones + 1;
 				currBoard[endingPit + (2*(6-endingPit))] = 0;
 			}
-			
+			/*This time, B's last stone dropped lands in an empty pit on B's side, the same rule applies here.*/
 			if(!turnA && endingPit > 6 && endingPit < 13 && prevBoard[endingPit] == 0 && !opponMancReached) {
 				currBoard[endingPit] = 0;
 				int opponStones = currBoard[endingPit - (2*(endingPit - 6))];
@@ -232,28 +258,31 @@ public class MancalaBoardModel {
 				currBoard[endingPit - (2*(endingPit - 6))] = 0;
 			}
 			
-			//When you loop through opponents side and reach your own again
+			//When A passes through opponents side and reaches A's side with the last stone, will require at least 8 stones in the starting pit.
 			if(turnA && opponMancReached) {
 				currBoard[13] = prevBoard[13];
 				int nextPitToGetStone = ownPitNumber + stoneCount + 1;
 				if(nextPitToGetStone > 13) {
-					nextPitToGetStone = nextPitToGetStone - 14;///////ONE ROUND?
+					nextPitToGetStone = nextPitToGetStone - 14;
 				}
 				currBoard[nextPitToGetStone] = currBoard[nextPitToGetStone] + 1;
-				if(prevBoard[nextPitToGetStone] == 0) {	//if ending pit was previously empty
+				//When A passes through opponent's side and also lands in an empty pit
+				if(prevBoard[nextPitToGetStone] == 0) {	
 					currBoard[nextPitToGetStone] = 0;
 					int opponStones = currBoard[nextPitToGetStone + (2*(6-nextPitToGetStone))];
 					currBoard[A_MANCALA] = currBoard[A_MANCALA] + opponStones + 1;
 					currBoard[nextPitToGetStone + (2*(6-nextPitToGetStone))] = 0;
 				}
 			}
+			//When B passes through opponents side and reaches B's side with the last stone
 			if(!turnA && opponMancReached) {
 				currBoard[6] = prevBoard[6];
 				int nextPitToGetStone = ownPitNumber + stoneCount + 1;
 				if(nextPitToGetStone > 13) {
-					nextPitToGetStone = nextPitToGetStone - 14;///////ONE ROUND?
+					nextPitToGetStone = nextPitToGetStone - 14;
 				}
 				currBoard[nextPitToGetStone + 7] = currBoard[nextPitToGetStone + 7] + 1;
+				//B passes through the opponent's side and also lands in an empty pit
 				if(prevBoard[nextPitToGetStone + 7] == 0) {
 					currBoard[nextPitToGetStone + 7] = 0;
 					int opponStones = currBoard[nextPitToGetStone + 7 + (2*(6 - (nextPitToGetStone + 7)))];
@@ -280,7 +309,10 @@ public class MancalaBoardModel {
 			l.stateChanged(new ChangeEvent(this));
 		}	
 	}
-	
+
+	/*
+	 * Adds a listener to ArrayList of listeners in the model.
+	 */
 	public void attach(ChangeListener l) {
 		
 		listeners.add(l);
