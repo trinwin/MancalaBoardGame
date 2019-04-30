@@ -201,7 +201,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
     		pits.get(i).addMouseListener(new PitMouseListener(i) {
     			public void mousePressed(MouseEvent e) {
     				int mouseID = this.getMouseListenerID();
-    				System.out.println(mouseID);
+    				System.out.println(mouseID + " this is mouse id");
 
 
 
@@ -216,8 +216,20 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 						else if(/*undoCountDownB < 0 && */turn == TURN_OF_A && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
 							announcements.setText("It's not your turn B! It's A's turn.");
 							System.out.println("undoCountDownB " + undoCountDownB);
+							for(int i: theModel.getCurrBoard())
+							{
+								System.out.print(i + " , ");
+							}
 						}
-						else if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) { //
+						else if (mouseID >=6 && theModel.getAmountInPit(mouseID + 1) == 0) {
+							System.out.println(mouseID);
+							announcements.setText("oops, no stones in this pit!");
+						}
+						else if (mouseID < 6 && theModel.getAmountInPit(mouseID) == 0) {
+							System.out.println(mouseID);
+							announcements.setText("oops, no stones in this pit!");
+						}
+						else if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) {// && theModel.getAmountInPit(mouseID) != 0) { //
 							theModel.move(mouseID);
 							if(theModel.isLastStoneInMancala()) {
 								turn = TURN_OF_A;
@@ -230,7 +242,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 							System.out.println("1 - here : ");
 							undoCountDownB = MAX_NUM_OF_UNDOS;
 						}
-						else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
+						else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {// && theModel.getAmountInPit(mouseID) != 0) {
 							theModel.move(mouseID);
 							if(theModel.isLastStoneInMancala()) {
 								turn = TURN_OF_B;
