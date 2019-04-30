@@ -4,16 +4,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 /**
  * The View and Controller.
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
  *
  */
-public class MancalaBoardView extends JFrame implements ChangeListener { ///////
+public class MancalaBoardView extends JFrame implements ChangeListener {
 
 	private static final int LAST_PIT_OF_B = 11;
 	private static final int FIRST_PIT_OF_B = 6;
@@ -25,15 +25,14 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 
 	private static final int MAX_NUM_OF_UNDOS = 3;
 
-	private MancalaBoardModel theModel;						// the model
-	private BoardLayoutStrategy boardLayoutStrategy;		// general strategy
-	private ArrayList<JButton> pits = new ArrayList<>(); 	// JButtons representing pits
+	private MancalaBoardModel theModel;
+	private BoardLayoutStrategy boardLayoutStrategy;	// general strategy
+	private ArrayList<JButton> pits = new ArrayList<>();// JButtons Representing Pits
 
 	private boolean mancalaReached = false;
 	private int undoCountDownA;
 	private int undoCountDownB;
 	private int turn; //0 - A; 1 - B
-
 
 	/**
 	 * Constructs a MancalaBoardView with specified model and
@@ -125,7 +124,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					boardLayoutStrategy = new HorizontalBoardLayout();
 				}
 
-				// Display the board after updating the strategy
 				displayBoard();
 			}
 
@@ -154,68 +152,69 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 		setLayout(new BorderLayout(20, 20));
 
 		// Buttons representing pits belonging to player A
-	    JButton a1 = new JButton();
-	    JButton a2 = new JButton();
-	    JButton a3 = new JButton();
-	    JButton a4 = new JButton();
-	    JButton a5 = new JButton();
-	    JButton a6 = new JButton();
+		JButton a1 = new JButton();
+		JButton a2 = new JButton();
+		JButton a3 = new JButton();
+		JButton a4 = new JButton();
+		JButton a5 = new JButton();
+		JButton a6 = new JButton();
 
-	    // Buttons representing pits belonging to player B
-	    JButton b1 = new JButton();
-	    JButton b2 = new JButton();
-	    JButton b3 = new JButton();
-	    JButton b4 = new JButton();
-	    JButton b5 = new JButton();
-	    JButton b6 = new JButton();
+		// Buttons representing pits belonging to player B
+		JButton b1 = new JButton();
+		JButton b2 = new JButton();
+		JButton b3 = new JButton();
+		JButton b4 = new JButton();
+		JButton b5 = new JButton();
+		JButton b6 = new JButton();
 
-	    // Add JButtons belonging to player A to ArrayList of pits
-	    pits.add(a1);
-	    pits.add(a2);
-	    pits.add(a3);
-	    pits.add(a4);
-	    pits.add(a5);
-	    pits.add(a6);
+		// Add JButtons belonging to player A to ArrayList of pits
+		pits.add(a1);
+		pits.add(a2);
+		pits.add(a3);
+		pits.add(a4);
+		pits.add(a5);
+		pits.add(a6);
 
-	    // Add JButtons belonging to player B to ArrayList of pits
-	    pits.add(b1);
-	    pits.add(b2);
-	    pits.add(b3);
-	    pits.add(b4);
-	    pits.add(b5);
-	    pits.add(b6);
+		// Add JButtons belonging to player B to ArrayList of pits
+		pits.add(b1);
+		pits.add(b2);
+		pits.add(b3);
+		pits.add(b4);
+		pits.add(b5);
+		pits.add(b6);
 
-	    //north
-	    JTextField announcements = new JTextField(40);
-	    announcements.setText("Play game!");
+		//north
+		JTextField announcements = new JTextField(40);
+		announcements.setText("Play game!");
 
-	    for(int i = 0; i < pits.size(); i ++) {
+		for(int i = 0; i < pits.size(); i ++) {
 
-	    	// Set the background of each pit JButton to light brown
-	    	pits.get(i).setBackground(new Color(207, 185, 154));
-	    	pits.get(i).setPreferredSize(new Dimension(100,70));
+			// Set the background of each pit JButton to light brown
+			pits.get(i).setBackground(new Color(207, 185, 154));
+			pits.get(i).setPreferredSize(new Dimension(100,70));
 			pits.get(i).setOpaque(true);
 			pits.get(i).setBorderPainted(false);
 
 			// Add a listener to pits and update model if button is pressed
-    		pits.get(i).addMouseListener(new PitMouseListener(i) {
-    			public void mousePressed(MouseEvent e) {
-    				int mouseID = this.getMouseListenerID();
-    				System.out.println(mouseID);
-
-//    				int stoneAmount = theModel.getAmountInPit(mouseID);
+			pits.get(i).addMouseListener(new PitMouseListener(i) {
+				public void mousePressed(MouseEvent e) {
+					int mouseID = this.getMouseListenerID();
 
 					//prevents player A from going on player B's turn
-					if(/*undoCountDownA < 0 &&*/ turn == TURN_OF_B && mouseID <= LAST_PIT_OF_A) {
+					if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_A) {
 						announcements.setText("It's not your turn A! It's B's turn.");
-						System.out.println("undoCountDownA " + undoCountDownA);
 					}
 					//prevents player B from going on player A's turn
-					else if(/*undoCountDownB < 0 && */turn == TURN_OF_A && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
+					else if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
 						announcements.setText("It's not your turn B! It's A's turn.");
-						System.out.println("undoCountDownB " + undoCountDownB);
 					}
-					else if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) { //
+					else if (mouseID >= 6 && theModel.getAmountInPit(mouseID + 1) == 0) {
+						announcements.setText("oops, no stones in this pit!");
+					}
+					else if (mouseID < 6 && theModel.getAmountInPit(mouseID) == 0) {
+						announcements.setText("oops, no stones in this pit!");
+					}
+					else if(turn == TURN_OF_A && mouseID <= LAST_PIT_OF_A) {
 						theModel.move(mouseID);
 						if(theModel.isLastStoneInMancala()) {
 							turn = TURN_OF_A;
@@ -225,7 +224,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 							turn = TURN_OF_B;
 							mancalaReached = false;
 						}
-						System.out.println("1 - here : ");
 						undoCountDownB = MAX_NUM_OF_UNDOS;
 					}
 					else if(turn == TURN_OF_B && mouseID <= LAST_PIT_OF_B && mouseID >= FIRST_PIT_OF_B) {
@@ -238,52 +236,36 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 							turn = TURN_OF_A;
 							mancalaReached = false;
 						}
-						System.out.println("2 - here : ");
 						undoCountDownA = MAX_NUM_OF_UNDOS;
 					}
 
-					//undoCount = 0;
-					System.out.println("10 - here : turn " + turn + ", undoA " + undoCountDownA);
 
 					//check for game over
 					int gameOverFlag = theModel.isGameOver();
 
 					if (gameOverFlag > 1) {
-						System.out.println("game over " + gameOverFlag);
 						int winner = theModel.winner(gameOverFlag);
 						if (winner == 1){
-							System.out.println("winner is A");
 							announcements.setText("Congratulation! A is the winner");
-
 						} else if (winner == 2){
-							System.out.println("winner is B");
 							announcements.setText("Congratulation! B is the winner");
 						}
 					}
-
-
-					//move all leftover stones to mancala --> repaint the board
-					//find the winner and display
-					//not allow user to click
-
 				}
-    		});
-	    }
+			});
+		}
 
 
-	    int [] mancalaData = theModel.getCurrBoard();
+		int [] mancalaData = theModel.getCurrBoard();
 
-	    // Center
-	    JLabel center = new JLabel(boardLayoutStrategy.getBoard());
-	    boardLayoutStrategy.addStones(pits, mancalaData);
-	    boardLayoutStrategy.organizePitsJLabel(pits, center);
-	    add(center, BorderLayout.CENTER);
+		// Center
+		JLabel center = new JLabel(boardLayoutStrategy.getBoard());
+		boardLayoutStrategy.addStones(pits, mancalaData);
+		boardLayoutStrategy.organizePitsJLabel(pits, center);
+		add(center, BorderLayout.CENTER);
 
-	    // North
-	    // practice:
-	    //JTextField announcements = new JTextField("Play game!");
-
-	    JPanel north = new JPanel();
+		// North
+		JPanel north = new JPanel();
 		north.add(announcements);
 		add(north, BorderLayout.NORTH);
 
@@ -299,34 +281,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// stop trivial undo
-
-				System.out.println("top undoCountB: " + undoCountDownB);
-				System.out.println("undoCountA: " + undoCountDownA);
-				System.out.println("---: " + turn);
-
 				if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
-//					if (turn == TURN_OF_A && undoCountDownB == MAX_NUM_OF_UNDOS) {
-//						turn = TURN_OF_B;
-//						System.out.println("mac");
-//					}
-//					else if (turn == TURN_OF_B && undoCountDownA == MAX_NUM_OF_UNDOS) {
-//						turn = TURN_OF_A;
-//						System.out.println("and");
-//					}
-//					else if(undoCountDownA < MAX_NUM_OF_UNDOS) {
-//						turn = TURN_OF_A;
-//						System.out.println("cheese");
-//					}
-//					else if(undoCountDownB < MAX_NUM_OF_UNDOS) {
-//						turn = TURN_OF_B;
-//						System.out.println("beans");
-//					}
-//					if(turn == TURN_OF_A) {
-//						turn = TURN_OF_B;
-//					} else if (turn == TURN_OF_B) {
-//						turn = TURN_OF_A;
-////					}
 					undoCountText.setText("Oops! No move to undo");
 				}
 
@@ -338,8 +293,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 				}
 				else if (mancalaReached && turn == TURN_OF_B) {
 					undoCountDownB--;
-					System.out.println("undoCountB: " + undoCountDownB);
-					System.out.println("undoCountA: " + undoCountDownA);
 					undoCountText.setText("Number of undos: " + undoCountDownB);
 					theModel.undo();
 					if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
@@ -349,8 +302,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 				}
 				else if (mancalaReached && turn == TURN_OF_A) {
 					undoCountDownA--;
-					System.out.println("undoCountB: " + undoCountDownB);
-					System.out.println("undoCountA: " + undoCountDownA);
 					undoCountText.setText("Number of undos: " + undoCountDownA);
 					theModel.undo();
 					if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
@@ -358,41 +309,18 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 					}
 					mancalaReached = false;
 				}
-//				else if(turn == TURN_OF_A && undoCountDownA < MAX_NUM_OF_UNDOS) {
-//					undoCountDownA--;
-//					undoCountText.setText("Number of undos: " + undoCountDownA);
-//					theModel.undo();
-//					turn = TURN_OF_A;
-//					System.out.println("hello");
-//				}
-//				else if(turn == TURN_OF_B && undoCountDownB < MAX_NUM_OF_UNDOS) {
-//					undoCountDownB--;
-//					undoCountText.setText("Number of undos: " + undoCountDownA);
-//					theModel.undo();
-//					turn = TURN_OF_B;
-//				}
 				else if (turn == TURN_OF_A) {
 					undoCountDownB--;
-					System.out.println("undoCountB: " + undoCountDownB);
-					System.out.println("undoCountA: " + undoCountDownA);
 					undoCountText.setText("Number of undos: " + undoCountDownB);
 					theModel.undo();
 					turn = TURN_OF_B;
-					System.out.println("6 - here : ");
 				}
 				else if (turn == TURN_OF_B) {
 					undoCountDownA--;
 					undoCountText.setText("Number of undos: " + undoCountDownA);
-					System.out.println("undoCountB: " + undoCountDownB);
-					System.out.println("undoCountA: " + undoCountDownA);
 					theModel.undo();
 					turn = TURN_OF_A;
-					System.out.println("7 - here : ");
 				}
-
-				System.out.println("bottom undoCountB: " + undoCountDownB);
-				System.out.println("undoCountA: " + undoCountDownA);
-				System.out.println("---: " + turn);
 
 			}
 
@@ -417,11 +345,15 @@ public class MancalaBoardView extends JFrame implements ChangeListener { ///////
 		aModel.attach(aView);
 	}
 
-	public void stateChanged(ChangeEvent e) { //Refer to Cay Hortsmann BarFrame
+	/**
+	 * Called when the data in the model is changed.
+	 *
+	 * @param e the event representing the change
+	 */
+	public void stateChanged(ChangeEvent e) {
 		int[] mancalaData= theModel.getCurrBoard();
 		boardLayoutStrategy.addStones(pits, mancalaData);
 		repaint();
-		//if theModel.isGameOver find the winner and display
 	}
 
 }
