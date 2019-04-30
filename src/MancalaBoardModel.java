@@ -51,12 +51,9 @@ public class MancalaBoardModel {
 	public void fillInitialBoard(int stonesPerPit) {
 		
 		for (int i = 0; i < currBoard.length; i++) {
-			
 			if (i == A_MANCALA || i == B_MANCALA) {
-				
 				currBoard[i] = 0;
 			} else {
-				
 				currBoard[i] = stonesPerPit;
 			}
 		}
@@ -106,41 +103,36 @@ public class MancalaBoardModel {
      *          1 if game is over and all A and B pits are empty
      *          2 if game is over and only A pits are empty
      *          3 if game is over and only B pits are empty
-     *
-	 * HERE
 	 */
 	public int isGameOver() {
 
-	    // Cases:
-        // all A pits empty - B pits still have stones --> move stones to B mancala
-        // all B pits empty - A pits still have stones --> move stones to A mancala
-        // both A and B pits are empty - game over
+        boolean A_empty = false, B_empty = false;
 
-        boolean empty_A = false, empty_B = false;
-
+        //Check if all A's pits are empty
         for (int pitA = 0; pitA < A_MANCALA; pitA++){
             if (currBoard[pitA] != 0){
-                empty_A = false;
+                A_empty = false;
                 break;
-            } else empty_A = true;
+            } else A_empty = true;
         }
 
+        //Check if all B's pits are empty
         for (int pitB = 7; pitB < B_MANCALA; pitB++){
             if (currBoard[pitB] != 0){
-                empty_B = false;
+                B_empty = false;
                 break;
 
-            } else empty_B = true;
+            } else B_empty = true;
         }
-        System.out.println(empty_A + "--" + empty_B);
-        if (empty_A && empty_B) return 1;
+
+        System.out.println(A_empty + "--" + B_empty);
+
+        if (A_empty && B_empty) return 1;
         else {
-            if (empty_A) return 2;
-            else if (empty_B) return 3;
+            if (A_empty) return 2;
+            else if (B_empty) return 3;
         }
         return 0;
-
-
 	}
 
     /**
@@ -171,7 +163,7 @@ public class MancalaBoardModel {
     /**
      *
      * @param pitPos
-     * @param mancalaPos
+     * @param mancalaPos pos
      */
 	public void moveStonesToMancala(int pitPos, int mancalaPos){
         for (int i = pitPos; i < mancalaPos; i++){
