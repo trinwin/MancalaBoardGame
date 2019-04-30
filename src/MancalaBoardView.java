@@ -15,10 +15,9 @@ import javax.swing.event.ChangeListener;
  */
 public class MancalaBoardView extends JFrame implements ChangeListener {
 
+	private static final int LAST_PIT_OF_A = 5;
 	private static final int LAST_PIT_OF_B = 11;
 	private static final int FIRST_PIT_OF_B = 6;
-
-	private static final int LAST_PIT_OF_A = 5;
 
 	private static final int TURN_OF_A = 0;
 	private static final int TURN_OF_B = 1;
@@ -239,9 +238,8 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 					//Check if the game is over
 					int gameOverFlag = theModel.isGameOver();
 
-					if (gameOverFlag > 1) {
+					if (gameOverFlag > 0) {
 						int winner = theModel.winner(gameOverFlag);
-
 						if (winner == 1) 		announcements.setText("Congratulation! A is the winner");
 						else if (winner == 2)   announcements.setText("Congratulation! B is the winner");
 						else if (winner == 2)   announcements.setText("There is a tie");
@@ -263,7 +261,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		north.add(announcements);
 		add(north, BorderLayout.NORTH);
 
-		//south panel
+		// South
 		JPanel south = new JPanel();
 
 		JTextField undoCountText = new JTextField(20);

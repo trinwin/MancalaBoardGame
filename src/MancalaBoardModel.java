@@ -126,11 +126,9 @@ public class MancalaBoardModel {
 
         System.out.println(A_empty + "--" + B_empty);
 
-        if (A_empty && B_empty) return 1;
-        else {
-            if (A_empty) return 2;
-            else if (B_empty) return 3;
-        }
+		if (A_empty) return 1;
+		else if (B_empty) return 2;
+
         return 0;
 	}
 
@@ -146,10 +144,9 @@ public class MancalaBoardModel {
 
 	    if (emptyPitFlag == 1){ //only all A pits are empty
             moveStonesToMancala(7, B_MANCALA); //move leftover stones to Mancala B
-
-        } else if (emptyPitFlag == 2){ //only all B pits are empty
+        }
+	    else if (emptyPitFlag == 2){ //only all B pits are empty
             moveStonesToMancala(0, A_MANCALA); //move leftover stones to Mancala A
-
         }
 
 	    //Compare number of stones in two mancalas
