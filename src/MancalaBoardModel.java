@@ -225,7 +225,7 @@ public class MancalaBoardModel {
 			//If a player's last stone lands in their own Mancala, that player gets another turn, so set lastStoneInMancala = true
 			if(ownPitNumber + stoneCount == 6) {
 				lastStoneInMancala = true;
-				System.out.println("You get another turn!");
+				//System.out.println("You get another turn!");
 			}
 			
 			//remove stones from chosen pit and redistribute them

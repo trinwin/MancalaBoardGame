@@ -144,7 +144,7 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 			Stone stones  = new Stone(mancalaData[i]);
 			stones.setIconHeight(60);
 			stones.setIconWidth(100);
-			System.out.println(mancalaData[i]);
+			//System.out.println(mancalaData[i]);
 
 			if(i == 6) { // Mancala A
 				mancalaA.setIcon(stones);
