@@ -4,8 +4,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
- * Apply Strategy Pattern that provide 2 styles of Mancala board
- * (Horizontal and Vertical board)
+ * @author Angel Nguyen, Trinh Nguyen, Diana Sok
+ * @version 1.0
+ * Interface for the strategy used to draw the Mancala board.
  */
 public interface BoardLayoutStrategy{
 

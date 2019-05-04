@@ -11,7 +11,7 @@ import javax.swing.event.ChangeListener;
 /**
  * The View and Controller.
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
- *
+ * @version 1.0
  */
 public class MancalaBoardView extends JFrame implements ChangeListener {
 
@@ -288,7 +288,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 					undoCountText.setText("Number of undos: " + undoCountDownB);
 					theModel.undo();
 					if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
-						turn = TURN_OF_A;
+						turn = TURN_OF_B;//still B's turn since B got a free turn for reaching own Mancala
 					}
 					mancalaReached = false;
 				}
@@ -297,17 +297,17 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 					undoCountText.setText("Number of undos: " + undoCountDownA);
 					theModel.undo();
 					if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
-						turn = TURN_OF_B;
+						turn = TURN_OF_A;//still A's turn since A got a free turn for reaching own Mancala
 					}
 					mancalaReached = false;
 				}
-				else if (turn == TURN_OF_A) {
+				else if (turn == TURN_OF_A) { //was B's turn and A did not reach Mancala, then B undo so turn goes back to B
 					undoCountDownB--;
 					undoCountText.setText("Number of undos: " + undoCountDownB);
 					theModel.undo();
 					turn = TURN_OF_B;
 				}
-				else if (turn == TURN_OF_B) {
+				else if (turn == TURN_OF_B) { //was A's turn and A did not reach Mancala, then A undo so turn goes back to A
 					undoCountDownA--;
 					undoCountText.setText("Number of undos: " + undoCountDownA);
 					theModel.undo();
@@ -325,12 +325,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
-	}
-
-	public static void main(String[] args) {
-		MancalaBoardModel aModel = new MancalaBoardModel();
-		MancalaBoardView aView = new MancalaBoardView(aModel);
-		aModel.attach(aView);
 	}
 
 	/**

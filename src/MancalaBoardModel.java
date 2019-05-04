@@ -8,7 +8,6 @@ import javax.swing.event.ChangeListener;
  * state of the board to allow a user a limited number of undos per turn.  An ArrayList is used to hold ChangeListeners that perform an 
  * action once the model notifies them of changes.  MancalaBoardModel also contains accessors and mutators to the data and states of the game.
  * 
- * 
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
  * @version 1.0
  *
@@ -224,7 +223,7 @@ public class MancalaBoardModel {
 			//If a player's last stone lands in their own Mancala, that player gets another turn, so set lastStoneInMancala = true
 			if(ownPitNumber + stoneCount == 6) {
 				lastStoneInMancala = true;
-				System.out.println("You get another turn!");
+				//System.out.println("You get another turn!");
 			}
 			
 			//remove stones from chosen pit and redistribute them
