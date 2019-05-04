@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 /**
  * A concrete strategy used to display Mancala board horizontally
  * when plugged into the context (MancalaBoardView)
+ * @author Angel Nguyen, Trinh Nguyen, Diana Sok
+ * @version 1.0
  */
 public class HorizontalBoardLayout implements BoardLayoutStrategy{
 

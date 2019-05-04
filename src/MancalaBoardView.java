@@ -11,7 +11,7 @@ import javax.swing.event.ChangeListener;
 /**
  * The View and Controller.
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
- *
+ * @version 1.0
  */
 public class MancalaBoardView extends JFrame implements ChangeListener {
 
