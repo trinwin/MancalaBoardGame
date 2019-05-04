@@ -327,12 +327,6 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 		setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		MancalaBoardModel aModel = new MancalaBoardModel();
-		MancalaBoardView aView = new MancalaBoardView(aModel);
-		aModel.attach(aView);
-	}
-
 	/**
 	 * Called when the data in the model is changed.
 	 * @param e the event representing the change
