@@ -144,11 +144,11 @@ public class VerticalBoardLayout implements BoardLayoutStrategy
 			stones.setIconWidth(100);
 			System.out.println(mancalaData[i]);
 
-			if(i == 6) { // Mancala A
+			if(i == 6) { 				// Mancala A
 				mancalaA.setIcon(stones);
-			}else if(i == 13) { // Mancala B
+			}else if(i == 13) { 		// Mancala B
 				mancalaB.setIcon(stones);
-			} else {
+			} else {					// Pits
 				if(i > 6) {
 					pits.get(i - 1).setIcon(stones);
 				} else{

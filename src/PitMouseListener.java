@@ -1,6 +1,5 @@
 import java.awt.event.MouseAdapter;
 
-
 /**
  * PitMouseListener inherits from MouseAdapter in order to use its mousePressed method.  
  * The main addition is the field mouseID, which identifies the mouseListener belonging to a particular pit,

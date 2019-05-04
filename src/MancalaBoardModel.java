@@ -142,8 +142,6 @@ public class MancalaBoardModel {
             } else B_empty = true;
         }
 
-        //System.out.println(A_empty + "--" + B_empty);
-
 		if (A_empty) return 1;
 		else if (B_empty) return 2;
 

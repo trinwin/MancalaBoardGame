@@ -50,7 +50,7 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 	/**
 	 * Set up a Horizontal Mancala Board with pits and two mancalas
 	 * @param pits - list of all JButtons of pits
-	 * @param label - main Mancala Board
+	 * @param label - contains main Mancala Board
 	 */
 	public void organizePitsJLabel(ArrayList<JButton> pits, JLabel label)
 	{
@@ -139,11 +139,12 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 			stones.setIconHeight(60);
 			stones.setIconWidth(100);
 
-			if(i == 6) { //Mancala A
+			if(i == 6) { 					// Mancala A
 				mancalaA.setIcon(stones);
-			} else if(i == 13) { // Mancala B
+			} else if(i == 13) { 			// Mancala B
 				mancalaB.setIcon(stones);
-			} else {
+			} else {						// Pits
+
 				if(i > 6) {
 					pits.get(i - 1).setIcon(stones);
 				} else {
