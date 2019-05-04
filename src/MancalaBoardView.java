@@ -288,7 +288,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 					undoCountText.setText("Number of undos: " + undoCountDownB);
 					theModel.undo();
 					if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
-						turn = TURN_OF_A;
+						turn = TURN_OF_B;//
 					}
 					mancalaReached = false;
 				}
@@ -297,7 +297,7 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 					undoCountText.setText("Number of undos: " + undoCountDownA);
 					theModel.undo();
 					if(Arrays.equals(theModel.getCurrBoard(), theModel.getPrevBoard())) {
-						turn = TURN_OF_B;
+						turn = TURN_OF_A;
 					}
 					mancalaReached = false;
 				}
