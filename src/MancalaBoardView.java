@@ -10,9 +10,12 @@ import javax.swing.event.ChangeListener;
 
 /**
  * The View and Controller of Mancala Board Game.
+ *
+ * @team Like A Boss
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
  * @version 1.0
  */
+
 public class MancalaBoardView extends JFrame implements ChangeListener {
 
 	private static final int LAST_PIT_OF_A = 5;

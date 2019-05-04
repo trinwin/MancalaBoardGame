@@ -10,6 +10,7 @@
 /**
  * Main class to run Mancala Game
  */
+
 public class MancalaBoardGameTester {
 	
 	public static void main(String[] args) {

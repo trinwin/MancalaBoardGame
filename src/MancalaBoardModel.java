@@ -7,11 +7,12 @@ import javax.swing.event.ChangeListener;
  * in a particular pit, which is held in 2 arrays.  One array houses the current state of the board while the other houses the previous 
  * state of the board to allow a user a limited number of undos per turn.  An ArrayList is used to hold ChangeListeners that perform an 
  * action once the model notifies them of changes.  MancalaBoardModel also contains accessors and mutators to the data and states of the game.
- * 
+ *
+ * @team Like A Boss
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
  * @version 1.0
- *
  */
+
 public class MancalaBoardModel {
 	
 	private static final int NUMBER_OF_PITS = 14;

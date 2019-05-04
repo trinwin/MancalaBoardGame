@@ -5,9 +5,12 @@ import javax.swing.JLabel;
 
 /**
  * Interface for the strategy used to draw the Mancala board.
+ *
+ * @team Like A Boss
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
  * @version 1.0
  */
+
 public interface BoardLayoutStrategy{
 
 	/**

@@ -4,11 +4,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import javax.swing.Icon;
+
 /**
  * A stone icon paints multiple stones in rows.
- * @version 1.0
+ *
+ * @team Like A Boss
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
+ * @version 1.0
  */
+
 public class Stone implements Icon {
 		
 	private static final int MAX_NUM_STONES_PER_ROW = 7;	// number of stones to draw per row
