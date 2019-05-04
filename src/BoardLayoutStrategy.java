@@ -4,9 +4,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
+ * Interface for the strategy used to draw the Mancala board.
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
  * @version 1.0
- * Interface for the strategy used to draw the Mancala board.
  */
 public interface BoardLayoutStrategy{
 
@@ -24,7 +24,7 @@ public interface BoardLayoutStrategy{
 	void organizePitsJLabel(ArrayList<JButton> pits, JLabel label);
 
 	/**
-	 *
+	 * Create Stone objects associated with each pits and mancala
 	 * @param pits - list of all JButtons of pitss
 	 * @param mancalaData - number of stones in each pit
 	 */

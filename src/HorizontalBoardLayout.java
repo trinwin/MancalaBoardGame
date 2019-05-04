@@ -135,7 +135,6 @@ public class HorizontalBoardLayout implements BoardLayoutStrategy{
 	 */
 	@Override
 	public void addStones(ArrayList<JButton> pits, int [] mancalaData) {
-		// TODO, consider:
 		for(int i = 0; i < mancalaData.length; i++) {
 			Stone stones = new Stone(mancalaData[i]);
 			stones.setIconHeight(60);

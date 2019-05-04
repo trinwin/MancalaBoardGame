@@ -9,7 +9,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * The View and Controller.
+ * The View and Controller of Mancala Board Game.
  * @author Angel Nguyen, Trinh Nguyen, Diana Sok
  * @version 1.0
  */
@@ -240,9 +240,9 @@ public class MancalaBoardView extends JFrame implements ChangeListener {
 
 					if (gameOverFlag > 0) {
 						int winner = theModel.winner(gameOverFlag);
-						if (winner == 1) 		announcements.setText("Congratulation! A is the winner");
-						else if (winner == 2)   announcements.setText("Congratulation! B is the winner");
-						else if (winner == 2)   announcements.setText("There is a tie");
+						if (winner == 1) 		announcements.setText("Congratulation! Player A is the winner");
+						else if (winner == 2)   announcements.setText("Congratulation! Player B is the winner");
+						else if (winner == 3)   announcements.setText("There is a tie. Let's play again!");
 					}
 				}
 			});
