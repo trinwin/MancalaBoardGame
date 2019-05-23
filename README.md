@@ -1,10 +1,20 @@
 # Mancala Board Game
-Develop Mancala Board Game with a graphical user interface using Swing APIs
+Develop Mancala Board Game with a graphical user interface using Swing API
+
+## Features
+- [x] MVC Pattern
+- [x] Strategy Pattern
+- [x] Swing API
+- [x] Anonymous Class
 
 ## GUI
-
+#### Allow players to select style of board (vertical or horizontal board) and choose the number of stones on each pit (3 or 4)
 <img width="829" alt="Screen Shot 2019-05-08 at 1 43 48 PM" src="https://user-images.githubusercontent.com/42901862/57413277-684f9080-71a8-11e9-8b58-7cff14355b64.png">
+
+##### Vertical Board with 3 stones on each pit
 <img width="718" alt="Screen Shot 2019-05-08 at 1 47 01 PM" src="https://user-images.githubusercontent.com/42901862/57413280-6980bd80-71a8-11e9-8f75-d00eeefa69e8.png">
+
+##### Horizontal Board with 4 stones on each pit
 <img width="1212" alt="Screen Shot 2019-05-08 at 1 47 33 PM" src="https://user-images.githubusercontent.com/42901862/57413282-6b4a8100-71a8-11e9-87db-45c514070bf6.png">
 
 ## UML Diagram
@@ -17,5 +27,3 @@ Develop Mancala Board Game with a graphical user interface using Swing APIs
 * **Trinh Nguyen** - [trinhng01](https://github.com/PurpleBooth)
 * **Diana Sok**    - [diana-sok](https://github.com/diana-sok)
 * **Angel Nguyen** - [angeln5](https://github.com/angeln5)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
