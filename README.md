@@ -24,6 +24,6 @@ Develop Mancala Board Game with a graphical user interface using Swing API
 <img width="524" alt="Screen Shot 2019-05-08 at 3 47 32 PM" src="https://user-images.githubusercontent.com/42901862/57413347-afd61c80-71a8-11e9-828f-01111a1aaaa9.png">
 
 ## Authors
-* **Trinh Nguyen** - [trinhng01](https://github.com/trinityng)
+* **Trinh Nguyen** - [trinityng](https://github.com/trinityng)
 * **Diana Sok**    - [diana-sok](https://github.com/diana-sok)
 * **Angel Nguyen** - [angeln5](https://github.com/angeln5)
